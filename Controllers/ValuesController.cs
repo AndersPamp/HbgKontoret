@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +15,9 @@ namespace HbgKontoret.Controllers
     [HttpGet]
     public ActionResult<IEnumerable<string>> Get()
     {
-      return new string[] { "value1", "value2" };
+
+      return new string[] { "value01" };
+
     }
 
     // GET api/values/5
@@ -41,5 +44,6 @@ namespace HbgKontoret.Controllers
     public void Delete(int id)
     {
     }
+
   }
 }
