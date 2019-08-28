@@ -1,0 +1,14 @@
+C:\Workspace\Lia\HbgKontoret\bin\Debug\netcoreapp2.2\HbgKontoret.deps.json
+C:\Workspace\Lia\HbgKontoret\bin\Debug\netcoreapp2.2\HbgKontoret.runtimeconfig.json
+C:\Workspace\Lia\HbgKontoret\bin\Debug\netcoreapp2.2\HbgKontoret.runtimeconfig.dev.json
+C:\Workspace\Lia\HbgKontoret\bin\Debug\netcoreapp2.2\HbgKontoret.dll
+C:\Workspace\Lia\HbgKontoret\bin\Debug\netcoreapp2.2\HbgKontoret.pdb
+C:\Workspace\Lia\HbgKontoret\obj\Debug\netcoreapp2.2\HbgKontoret.csprojAssemblyReference.cache
+C:\Workspace\Lia\HbgKontoret\obj\Debug\netcoreapp2.2\HbgKontoret.csproj.CoreCompileInputs.cache
+C:\Workspace\Lia\HbgKontoret\obj\Debug\netcoreapp2.2\HbgKontoret.RazorAssemblyInfo.cache
+C:\Workspace\Lia\HbgKontoret\obj\Debug\netcoreapp2.2\HbgKontoret.RazorAssemblyInfo.cs
+C:\Workspace\Lia\HbgKontoret\obj\Debug\netcoreapp2.2\HbgKontoret.AssemblyInfoInputs.cache
+C:\Workspace\Lia\HbgKontoret\obj\Debug\netcoreapp2.2\HbgKontoret.AssemblyInfo.cs
+C:\Workspace\Lia\HbgKontoret\obj\Debug\netcoreapp2.2\HbgKontoret.RazorTargetAssemblyInfo.cache
+C:\Workspace\Lia\HbgKontoret\obj\Debug\netcoreapp2.2\HbgKontoret.dll
+C:\Workspace\Lia\HbgKontoret\obj\Debug\netcoreapp2.2\HbgKontoret.pdb
