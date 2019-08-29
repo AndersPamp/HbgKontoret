@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HbgKontoret.Helpers;
-using HbgKontoret.Service.Interfaces;
-using HbgKontoret.Services;
+﻿using System.Text;
+using HbgKontoret.Data.Helpers;
+using HbgKontoret.Data.Service.Interfaces;
+using HbgKontoret.Data.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace HbgKontoret
@@ -34,7 +27,7 @@ namespace HbgKontoret
       services.AddCors();
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-      var appSettingsSection = Configuration.GetSection("AppSetttings");
+      var appSettingsSection = Configuration.GetSection("AppSettings");
       services.Configure<AppSettings>(appSettingsSection);
 
       var appSettings = appSettingsSection.Get<AppSettings>();

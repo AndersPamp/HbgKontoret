@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HbgKontoret", "HbgKontoret.csproj", "{DA1B4905-1C56-43C4-948D-059C850B659B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HbgKontoret.Data", "..\HbgKontoret.Data\HbgKontoret.Data.csproj", "{FB6CF771-1FD0-4F5A-9E01-2F968B20B15D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{DA1B4905-1C56-43C4-948D-059C850B659B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA1B4905-1C56-43C4-948D-059C850B659B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA1B4905-1C56-43C4-948D-059C850B659B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB6CF771-1FD0-4F5A-9E01-2F968B20B15D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB6CF771-1FD0-4F5A-9E01-2F968B20B15D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB6CF771-1FD0-4F5A-9E01-2F968B20B15D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB6CF771-1FD0-4F5A-9E01-2F968B20B15D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
