@@ -1,0 +1,9 @@
+C:\Workspace\Consid\HbgKontoret.Data\bin\Debug\netstandard2.0\HbgKontoret.Data.deps.json
+C:\Workspace\Consid\HbgKontoret.Data\bin\Debug\netstandard2.0\HbgKontoret.Data.dll
+C:\Workspace\Consid\HbgKontoret.Data\bin\Debug\netstandard2.0\HbgKontoret.Data.pdb
+C:\Workspace\Consid\HbgKontoret.Data\obj\Debug\netstandard2.0\HbgKontoret.Data.csproj.CoreCompileInputs.cache
+C:\Workspace\Consid\HbgKontoret.Data\obj\Debug\netstandard2.0\HbgKontoret.Data.AssemblyInfoInputs.cache
+C:\Workspace\Consid\HbgKontoret.Data\obj\Debug\netstandard2.0\HbgKontoret.Data.AssemblyInfo.cs
+C:\Workspace\Consid\HbgKontoret.Data\obj\Debug\netstandard2.0\HbgKontoret.Data.dll
+C:\Workspace\Consid\HbgKontoret.Data\obj\Debug\netstandard2.0\HbgKontoret.Data.pdb
+C:\Workspace\Consid\HbgKontoret.Data\obj\Debug\netstandard2.0\HbgKontoret.Data.csprojAssemblyReference.cache
