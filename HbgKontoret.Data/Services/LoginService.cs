@@ -4,13 +4,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using HbgKontoret.Data.Data.Repositories;
 using HbgKontoret.Data.Entities;
 using HbgKontoret.Data.Service.Interfaces;
 using HbgKontoret.Data.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Options;
-using System.Threading.Tasks;
 
 namespace HbgKontoret.Data.Services
 {
@@ -20,7 +20,7 @@ namespace HbgKontoret.Data.Services
 
     private List<Login> _users = new List<Login>
     {
-      new Login{Id=1, FirstName = "Test", LastName = "Login", Username = "test", Password = "test"}
+      new Login{Id=1, Username = "test", Password = "test"}
     };
 
     private readonly AppSettings _appSettings;
@@ -75,13 +75,14 @@ namespace HbgKontoret.Data.Services
       return _loginRepository.GetAll().Result;
     }
 
-    public IEnumerable<Login> RegisterUser(string userName, string password)
+    public Task<User> RegisterUser(string password, string userName)
     {
-      var user = new Login { Username = userName, Password = password };
+      var newUser= new User();
 
-      _loginRepository.AddAsync(user);
       
-      return GetAll();
+      
+
+      return null;
     }
   }
 }

@@ -1,4 +1,4 @@
-﻿using HbgKontoret.Data.Entities;
+﻿  using HbgKontoret.Data.Entities;
 using HbgKontoret.Data.Service.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;

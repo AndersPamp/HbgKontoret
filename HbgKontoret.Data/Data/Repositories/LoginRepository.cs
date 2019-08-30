@@ -17,12 +17,12 @@ namespace HbgKontoret.Data.Data.Repositories
 
     public async Task AddAsync(Login login)
     {
-      await _context.Users.AddAsync(login);
+      await _context.Logins.AddAsync(login);
     }
 
     public async Task<IEnumerable<Login>> GetAll()
     {
-      return await _context.Users.ToListAsync();
+      return await _context.Logins.ToListAsync();
     }
   }
 }

@@ -10,6 +10,6 @@ namespace HbgKontoret.Data.Service.Interfaces
   {
     Login Authenticate(string username, string password);
     IEnumerable<Login> GetAll();
-    IEnumerable<Login> RegisterUser(string userName, string password);
+    Task<User> RegisterUser(string password, string userName);
   }
 }
