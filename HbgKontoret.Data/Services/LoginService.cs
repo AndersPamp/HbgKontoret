@@ -20,7 +20,7 @@ namespace HbgKontoret.Data.Services
 
     private List<Login> _users = new List<Login>
     {
-      new Login{Id=1, Username = "test", Password = "test"}
+      new Login{Id= new Guid(), Username = "test", Password = "test"}
     };
 
     private readonly AppSettings _appSettings;

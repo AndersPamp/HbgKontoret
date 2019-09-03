@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HbgKontoret.Data.Entities
 {
-  class Profile
+  public class Profile
   {
     public Guid Id { get; set; }
     public string Manager { get; set; }
@@ -12,6 +12,5 @@ namespace HbgKontoret.Data.Entities
     public string LinkedInUrl { get; set; }
     public string PhoneNo { get; set; }
     public string AboutMe { get; set; }
-    
   }
 }

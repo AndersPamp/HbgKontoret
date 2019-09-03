@@ -1,9 +1,11 @@
 ﻿using System.Text;
+using AutoMapper;
 using HbgKontoret.Data.Helpers;
 using HbgKontoret.Data.Service.Interfaces;
 using HbgKontoret.Data.Services;
 using HbgKontoret.Data.Data;
 using HbgKontoret.Data.Data.Repositories;
+using HbgKontoret.Data.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,36 +31,42 @@ namespace HbgKontoret
     {
       services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+      services.AddAutoMapper(typeof(Startup));
 
       services.AddCors();
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
       services.AddScoped<LoginRepository>();
+      services.AddScoped<UserRepository>();
+      services.AddScoped<ProfileRepository>();
       services.AddScoped<ILoginService, LoginService>();
+      services.AddScoped<IUserService, UserService>();
+      services.AddScoped<IProfileService, ProfileService>();
+
 
       var appSettingsSection = Configuration.GetSection("AppSettings");
       services.Configure<AppSettings>(appSettingsSection);
 
       var appSettings = appSettingsSection.Get<AppSettings>();
-      var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-      services.AddAuthentication(x =>
-      {
-        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-      }).AddJwtBearer(x =>
-      {
-        x.RequireHttpsMetadata = false;
-        x.SaveToken = true;
-        x.TokenValidationParameters = new TokenValidationParameters
-        {
-          ValidateIssuerSigningKey = true,
-          IssuerSigningKey = new SymmetricSecurityKey(key),
-          ValidateIssuer = false,
-          ValidateAudience = false
-        };
-      });
+      //var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+      //services.AddAuthentication(x =>
+      //{
+      //  x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+      //  x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+      //}).AddJwtBearer(x =>
+      //{
+      //  x.RequireHttpsMetadata = false;
+      //  x.SaveToken = true;
+      //  x.TokenValidationParameters = new TokenValidationParameters
+      //  {
+      //    ValidateIssuerSigningKey = true,
+      //    IssuerSigningKey = new SymmetricSecurityKey(key),
+      //    ValidateIssuer = false,
+      //    ValidateAudience = false
+      //  };
+      //})
+    ;
 
-      services.AddScoped<ILoginService, LoginService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,12 +82,17 @@ namespace HbgKontoret
         app.UseHsts();
       }
 
-      app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+      //app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
-      app.UseAuthentication();
+      //app.UseAuthentication();
 
       app.UseHttpsRedirection();
-      app.UseMvc();
+      app.UseMvc(routes =>
+      {
+        routes.MapRoute(
+          name: "default",
+          template: "{controller?}/{action?}/{id?}");
+      });
     }
   }
 }

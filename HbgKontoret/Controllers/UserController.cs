@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using HbgKontoret.Data.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using HbgKontoret.Data.Services.Interfaces;
 
 namespace HbgKontoret.Controllers
 {
@@ -11,36 +14,68 @@ namespace HbgKontoret.Controllers
   [ApiController]
   public class UserController : ControllerBase
   {
+    private readonly IUserService _userService;
+
+    public UserController(IUserService userService)
+    {
+      _userService = userService;
+    }
     // GET: api/User
     [HttpGet]
-    public IEnumerable<string> Get()
+    public async Task<ActionResult<IEnumerable<User>>> GetAll()
     {
-      return new string[] { "value1", "value2" };
+      return Ok(await _userService.GetAllUsersAsync());
     }
 
     // GET: api/User/5
-    [HttpGet("{id}", Name = "Get")]
-    public string Get(int id)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<User>> GetUserById(Guid id)
     {
-      return "value";
+
+      return Ok(await _userService.GetUserByIdAsync(id));
     }
 
     // POST: api/User
     [HttpPost]
-    public void Post([FromBody] string value)
+    public async Task<ActionResult<User>> AddUser([FromBody]User user)
+
     {
+      if (ModelState.IsValid)
+      {
+        var newUser = await _userService.AddUserAsync(user.FirstName, user.LastName, user.Email);
+        return Created("", newUser);
+      }
+
+      return BadRequest("Not all required parameters were submitted");
     }
+
 
     // PUT: api/User/5
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public async Task<ActionResult<User>> EditUser(Guid id, [FromBody] User user)
     {
+      if (ModelState.IsValid)
+      {
+        var editedUser =
+          await _userService.EditUserAsync(id, user.FirstName, user.LastName, user.Email);
+        return Accepted(editedUser);
+      }
+
+      return BadRequest("Not all required parameters were submitted");
     }
 
     // DELETE: api/ApiWithActions/5
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public async Task<ActionResult> Delete(Guid id)
     {
+      var result = await _userService.DeleteUserAsync(id);
+
+      if (result)
+      {
+        return NoContent();
+      }
+
+      return BadRequest("Something went wrong");
     }
   }
 }

@@ -6,4 +6,6 @@ C:\Workspace\Consid\HbgKontoret.Data\obj\Debug\netstandard2.0\HbgKontoret.Data.A
 C:\Workspace\Consid\HbgKontoret.Data\obj\Debug\netstandard2.0\HbgKontoret.Data.AssemblyInfo.cs
 C:\Workspace\Consid\HbgKontoret.Data\obj\Debug\netstandard2.0\HbgKontoret.Data.dll
 C:\Workspace\Consid\HbgKontoret.Data\obj\Debug\netstandard2.0\HbgKontoret.Data.pdb
-C:\Workspace\Consid\HbgKontoret.Data\obj\Debug\netstandard2.0\HbgKontoret.Data.csprojAssemblyReference.cache
+C:\Workspace\Consid\HbgKontoret.Data\bin\Debug\netstandard2.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Workspace\Consid\HbgKontoret.Data\bin\Debug\netstandard2.0\Microsoft.AspNetCore.JsonPatch.xml
+C:\Workspace\Consid\HbgKontoret.Data\obj\Debug\netstandard2.0\HbgKontoret.Data.csproj.CopyComplete

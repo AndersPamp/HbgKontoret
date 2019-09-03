@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HbgKontoret.Data.Entities.Links
 {
-  class ProfileOffice
+  public class ProfileOffice
   {
+    public int Id { get; set; }
     public Guid ProfileId { get; set; }
     public Profile Profile { get; set; }
     public int OfficeId { get; set; }
