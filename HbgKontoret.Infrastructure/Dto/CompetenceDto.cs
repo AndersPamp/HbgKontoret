@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HbgKontoret.Data.Entities.Dto
+namespace HbgKontoret.Infrastructure.Dto
 {
-  class CompetenceDto
+  public class CompetenceDto
   {
   }
 }

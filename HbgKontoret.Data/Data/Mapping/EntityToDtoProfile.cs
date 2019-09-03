@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using HbgKontoret.Data.Entities;
-using HbgKontoret.Data.Entities.Dto;
+using HbgKontoret.Infrastructure.Dto;
 using Profile = AutoMapper.Profile;
 
 namespace HbgKontoret.Data.Data.Mapping

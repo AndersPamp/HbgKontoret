@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using HbgKontoret.Data.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using HbgKontoret.Data.Services.Interfaces;
+using HbgKontoret.Infrastructure.Interfaces;
 
 namespace HbgKontoret.Controllers
 {

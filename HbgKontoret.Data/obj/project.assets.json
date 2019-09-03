@@ -1271,6 +1271,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
+      },
+      "HbgKontoret.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/HbgKontoret.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/HbgKontoret.Infrastructure.dll": {}
+        }
       }
     }
   },
@@ -5020,12 +5030,18 @@
         "system.xml.xmldocument.4.3.0.nupkg.sha512",
         "system.xml.xmldocument.nuspec"
       ]
+    },
+    "HbgKontoret.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../HbgKontoret.Infrastructure/HbgKontoret.Infrastructure.csproj",
+      "msbuildProject": "../HbgKontoret.Infrastructure/HbgKontoret.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "AutoMapper >= 9.0.0",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 7.0.0",
+      "HbgKontoret.Infrastructure >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 2.2.6",
       "Microsoft.EntityFrameworkCore.Design >= 2.2.6",
       "Microsoft.EntityFrameworkCore.SqlServer >= 2.2.6",
@@ -5066,7 +5082,11 @@
       },
       "frameworks": {
         "netstandard2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Workspace\\Consid\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj": {
+              "projectPath": "C:\\Workspace\\Consid\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

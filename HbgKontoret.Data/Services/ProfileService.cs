@@ -4,8 +4,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using HbgKontoret.Data.Data.Repositories;
-using HbgKontoret.Data.Entities.Dto;
-using HbgKontoret.Data.Services.Interfaces;
+using HbgKontoret.Infrastructure.Dto;
+using HbgKontoret.Infrastructure.Interfaces;
 using Profile = HbgKontoret.Data.Entities.Profile;
 
 namespace HbgKontoret.Data.Services
@@ -13,27 +13,24 @@ namespace HbgKontoret.Data.Services
   public class ProfileService : IProfileService
   {
     private readonly ProfileRepository _profileRepository;
-    private readonly IMapper _mapper;
 
-    public ProfileService(ProfileRepository profileRepository, IMapper mapper)
+    public ProfileService(ProfileRepository profileRepository)
     {
       _profileRepository = profileRepository;
-      _mapper = mapper;
     }
     public async Task<IEnumerable<ProfileDto>> GetAllProfileAsync()
     {
       var profiles = await _profileRepository.GetAllProfilesAsync();
-      var prodileDtos = _mapper.Map<IEnumerable<Profile>, IEnumerable<ProfileDto>>(profiles);
-      return prodileDtos;
+      return profiles;
     }
-    public async Task<Profile> GetProfileByIdAsync(Guid profileId)
+    public async Task<ProfileDto> GetProfileByIdAsync(Guid profileId)
     {
       var profile = await _profileRepository.GetProfileByIdAsync(profileId);
       return profile;
     }
-    public async Task<Profile> AddProfileAsync(string manager, string imageUrl, string linkedinUrl, string phoneNumber, string aboutMe)
+    public async Task<ProfileDto> AddProfileAsync(string manager, string imageUrl, string linkedinUrl, string phoneNumber, string aboutMe)
     {
-      var newProfile= new Profile()
+      var newProfileDto = new ProfileDto()
       {
         Manager = manager,
         ImageUrl = imageUrl,
@@ -41,13 +38,13 @@ namespace HbgKontoret.Data.Services
         PhoneNo = phoneNumber,
         AboutMe = aboutMe
       };
-      await _profileRepository.AddProfileAsync(newProfile);
+      await _profileRepository.AddProfileAsync(newProfileDto);
 
-      return newProfile;
+      return newProfileDto;
     }
 
 
-    public async Task<Profile> EditProfileAsync(Guid profileId, string manager, string imageUrl, string linkedinUrl, string phoneNumber,
+    public async Task<ProfileDto> EditProfileAsync(Guid profileId, string manager, string imageUrl, string linkedinUrl, string phoneNumber,
       string aboutMe)
     {
       var profileForEdit = await _profileRepository.GetProfileByIdAsync(profileId);
@@ -61,21 +58,11 @@ namespace HbgKontoret.Data.Services
       return profileForEdit;
     }
 
-    //public async Task<Profile> EditProfileAsync(Guid id, JsonPatchDocument<Profile> value)
-    //{
-    //  var profile = await _profileRepository.GetProfileByIdAsync(id);
-    //  if (profile != null)
-    //  {
-    //    value.ApplyTo(profile, null);
-    //  }
-
-    //}
-
     public async Task<bool> DeleteProfileAsync(Guid profileId)
     {
       var profileForDeletion = await _profileRepository.GetProfileByIdAsync(profileId);
 
-      if (profileForDeletion!=null)
+      if (profileForDeletion != null)
       {
         await _profileRepository.DeleteProfileByIdAsync(profileId);
         return true;
@@ -85,3 +72,5 @@ namespace HbgKontoret.Data.Services
     }
   }
 }
+
+

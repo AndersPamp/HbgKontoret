@@ -24,9 +24,8 @@
     ".NETCoreApp,Version=v2.2": {
       "HbgKontoret/1.0.0": {
         "dependencies": {
-          "AutoMapper": "9.0.0",
-          "AutoMapper.Extensions.Microsoft.DependencyInjection": "7.0.0",
           "HbgKontoret.Data": "1.0.0",
+          "HbgKontoret.Infrastructure": "1.0.0",
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
           "Microsoft.NETCore.App": "2.2.0",
@@ -821,6 +820,7 @@
         "dependencies": {
           "AutoMapper": "9.0.0",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "7.0.0",
+          "HbgKontoret.Infrastructure": "1.0.0",
           "Microsoft.EntityFrameworkCore": "2.2.6",
           "Microsoft.EntityFrameworkCore.Design": "2.2.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.2.6",
@@ -831,6 +831,14 @@
         },
         "compile": {
           "HbgKontoret.Data.dll": {}
+        }
+      },
+      "HbgKontoret.Infrastructure/1.0.0": {
+        "runtime": {
+          "HbgKontoret.Infrastructure.dll": {}
+        },
+        "compile": {
+          "HbgKontoret.Infrastructure.dll": {}
         }
       },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
@@ -3907,6 +3915,11 @@
       "hashPath": "system.text.encoding.codepages.4.5.0.nupkg.sha512"
     },
     "HbgKontoret.Data/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "HbgKontoret.Infrastructure/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

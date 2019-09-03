@@ -7,8 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using HbgKontoret.Data.Data.Repositories;
 using HbgKontoret.Data.Entities;
-using HbgKontoret.Data.Service.Interfaces;
+using HbgKontoret.Infrastructure.Dto;
 using HbgKontoret.Data.Helpers;
+using HbgKontoret.Infrastructure.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Options;
 
@@ -75,7 +76,7 @@ namespace HbgKontoret.Data.Services
       return _loginRepository.GetAll().Result;
     }
 
-    public Task<User> RegisterUser(string password, string userName)
+    public Task<UserDto> RegisterUser(string password, string userName)
     {
       var newUser= new User();
 

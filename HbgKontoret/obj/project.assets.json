@@ -4608,6 +4608,7 @@
         "dependencies": {
           "AutoMapper": "9.0.0",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "7.0.0",
+          "HbgKontoret.Infrastructure": "1.0.0",
           "Microsoft.EntityFrameworkCore": "2.2.6",
           "Microsoft.EntityFrameworkCore.Design": "2.2.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.2.6",
@@ -4618,6 +4619,16 @@
         },
         "runtime": {
           "bin/placeholder/HbgKontoret.Data.dll": {}
+        }
+      },
+      "HbgKontoret.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/HbgKontoret.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/HbgKontoret.Infrastructure.dll": {}
         }
       }
     }
@@ -12525,13 +12536,17 @@
       "type": "project",
       "path": "../HbgKontoret.Data/HbgKontoret.Data.csproj",
       "msbuildProject": "../HbgKontoret.Data/HbgKontoret.Data.csproj"
+    },
+    "HbgKontoret.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../HbgKontoret.Infrastructure/HbgKontoret.Infrastructure.csproj",
+      "msbuildProject": "../HbgKontoret.Infrastructure/HbgKontoret.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
-      "AutoMapper >= 9.0.0",
-      "AutoMapper.Extensions.Microsoft.DependencyInjection >= 7.0.0",
       "HbgKontoret.Data >= 1.0.0",
+      "HbgKontoret.Infrastructure >= 1.0.0",
       "Microsoft.AspNetCore.App >= 2.2.0",
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
       "Microsoft.NETCore.App >= 2.2.0",
@@ -12574,6 +12589,9 @@
           "projectReferences": {
             "C:\\Workspace\\Consid\\HbgKontoret.Data\\HbgKontoret.Data.csproj": {
               "projectPath": "C:\\Workspace\\Consid\\HbgKontoret.Data\\HbgKontoret.Data.csproj"
+            },
+            "C:\\Workspace\\Consid\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj": {
+              "projectPath": "C:\\Workspace\\Consid\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj"
             }
           }
         }
@@ -12587,14 +12605,6 @@
     "frameworks": {
       "netcoreapp2.2": {
         "dependencies": {
-          "AutoMapper": {
-            "target": "Package",
-            "version": "[9.0.0, )"
-          },
-          "AutoMapper.Extensions.Microsoft.DependencyInjection": {
-            "target": "Package",
-            "version": "[7.0.0, )"
-          },
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
             "target": "Package",

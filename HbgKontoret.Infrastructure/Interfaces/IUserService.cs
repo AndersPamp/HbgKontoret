@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using HbgKontoret.Data.Entities;
-using HbgKontoret.Data.Entities.Dto;
+using HbgKontoret.Infrastructure.Dto;
 
-namespace HbgKontoret.Data.Services.Interfaces
+namespace HbgKontoret.Infrastructure.Interfaces
 {
   public interface IUserService
   {
-    Task<User> AddUserAsync(string firstName, string lastName, string email);
+    Task<UserDto> AddUserAsync(string firstName, string lastName, string email);
     Task<bool> DeleteUserAsync(Guid userId);
     Task<IEnumerable<UserDto>> GetAllUsersAsync();
     Task<UserDto> GetUserByIdAsync(Guid userId);
-    Task<User> EditUserAsync(Guid userId, string firstName, string lastName, string email);
+    Task<UserDto> EditUserAsync(Guid userId, string firstName, string lastName, string email);
   }
 }

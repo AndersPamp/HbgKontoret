@@ -1,11 +1,11 @@
 ﻿using System.Text;
 using AutoMapper;
 using HbgKontoret.Data.Helpers;
-using HbgKontoret.Data.Service.Interfaces;
-using HbgKontoret.Data.Services;
+using HbgKontoret.Infrastructure;
 using HbgKontoret.Data.Data;
 using HbgKontoret.Data.Data.Repositories;
-using HbgKontoret.Data.Services.Interfaces;
+using HbgKontoret.Data.Services;
+using HbgKontoret.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

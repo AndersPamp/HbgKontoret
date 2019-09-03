@@ -1,0 +1,9 @@
+C:\Workspace\Consid\HbgKontoret.Infrastructure\bin\Debug\netstandard2.0\HbgKontoret.Infrastructure.deps.json
+C:\Workspace\Consid\HbgKontoret.Infrastructure\bin\Debug\netstandard2.0\HbgKontoret.Infrastructure.dll
+C:\Workspace\Consid\HbgKontoret.Infrastructure\bin\Debug\netstandard2.0\HbgKontoret.Infrastructure.pdb
+C:\Workspace\Consid\HbgKontoret.Infrastructure\obj\Debug\netstandard2.0\HbgKontoret.Infrastructure.csprojAssemblyReference.cache
+C:\Workspace\Consid\HbgKontoret.Infrastructure\obj\Debug\netstandard2.0\HbgKontoret.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Workspace\Consid\HbgKontoret.Infrastructure\obj\Debug\netstandard2.0\HbgKontoret.Infrastructure.AssemblyInfoInputs.cache
+C:\Workspace\Consid\HbgKontoret.Infrastructure\obj\Debug\netstandard2.0\HbgKontoret.Infrastructure.AssemblyInfo.cs
+C:\Workspace\Consid\HbgKontoret.Infrastructure\obj\Debug\netstandard2.0\HbgKontoret.Infrastructure.dll
+C:\Workspace\Consid\HbgKontoret.Infrastructure\obj\Debug\netstandard2.0\HbgKontoret.Infrastructure.pdb

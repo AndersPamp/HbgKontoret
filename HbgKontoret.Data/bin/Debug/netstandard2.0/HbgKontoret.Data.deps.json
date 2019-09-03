@@ -11,6 +11,7 @@
         "dependencies": {
           "AutoMapper": "9.0.0",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "7.0.0",
+          "HbgKontoret.Infrastructure": "1.0.0",
           "Microsoft.EntityFrameworkCore": "2.2.6",
           "Microsoft.EntityFrameworkCore.Design": "2.2.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.2.6",
@@ -1044,6 +1045,11 @@
           }
         }
       },
+      "HbgKontoret.Infrastructure/1.0.0": {
+        "runtime": {
+          "HbgKontoret.Infrastructure.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.JsonPatch/2.2.0.0": {
         "runtime": {
           "Microsoft.AspNetCore.JsonPatch.dll": {
@@ -1689,6 +1695,11 @@
       "sha512": "sha512-lJ8AxvkX7GQxpC6GFCeBj8ThYVyQczx2+f/cWHJU8tjS7YfI6Cv6bon70jVEgs2CiFbmmM8b9j1oZVx0dSI2Ww==",
       "path": "system.xml.xmldocument/4.3.0",
       "hashPath": "system.xml.xmldocument.4.3.0.nupkg.sha512"
+    },
+    "HbgKontoret.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Microsoft.AspNetCore.JsonPatch/2.2.0.0": {
       "type": "reference",

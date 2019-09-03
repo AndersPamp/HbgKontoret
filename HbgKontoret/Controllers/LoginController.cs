@@ -1,6 +1,6 @@
 ﻿  using HbgKontoret.Data.Entities;
-using HbgKontoret.Data.Service.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+  using HbgKontoret.Infrastructure.Interfaces;
+  using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,16 +18,16 @@ namespace HbgKontoret.Controllers
       _loginService = loginService;
     }
 
-    [AllowAnonymous]
-    [HttpPost("authenticate")]
-    public IActionResult Authenticate([FromBody] Login loginParam)
-    {
-      var user = _loginService.Authenticate(loginParam.Username, loginParam.Password);
-      if (user == null)
-        return BadRequest(new {message = "Username and/or password is incorrect"});
+    //[AllowAnonymous]
+    //[HttpPost("authenticate")]
+    //public IActionResult Authenticate([FromBody] Login loginParam)
+    //{
+    //  var user = _loginService.Authenticate(loginParam.Username, loginParam.Password);
+    //  if (user == null)
+    //    return BadRequest(new {message = "Username and/or password is incorrect"});
 
-      return Ok(user);
-    }
+    //  return Ok(user);
+    //}
 
     [AllowAnonymous]
     [HttpPost(template: "register")]
