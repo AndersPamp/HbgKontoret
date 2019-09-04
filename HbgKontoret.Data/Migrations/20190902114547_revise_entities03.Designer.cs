@@ -4,14 +4,16 @@ using HbgKontoret.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HbgKontoret.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190902114547_revise_entities03")]
+    partial class revise_entities03
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,6 +40,8 @@ namespace HbgKontoret.Data.Migrations
 
                     b.Property<int>("CompetenceId");
 
+                    b.Property<int>("Id");
+
                     b.HasKey("ProfileId", "CompetenceId");
 
                     b.HasIndex("CompetenceId");
@@ -50,6 +54,8 @@ namespace HbgKontoret.Data.Migrations
                     b.Property<Guid>("ProfileId");
 
                     b.Property<int>("OfficeId");
+
+                    b.Property<int>("Id");
 
                     b.HasKey("ProfileId", "OfficeId");
 
@@ -149,12 +155,12 @@ namespace HbgKontoret.Data.Migrations
             modelBuilder.Entity("HbgKontoret.Data.Entities.Links.ProfileCompetence", b =>
                 {
                     b.HasOne("HbgKontoret.Data.Entities.Competence", "Competence")
-                        .WithMany("ProfileCompetences")
+                        .WithMany()
                         .HasForeignKey("CompetenceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("HbgKontoret.Data.Entities.Profile", "Profile")
-                        .WithMany("ProfileCompetences")
+                        .WithMany()
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

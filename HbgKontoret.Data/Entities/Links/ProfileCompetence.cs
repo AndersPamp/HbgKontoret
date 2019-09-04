@@ -6,7 +6,7 @@ namespace HbgKontoret.Data.Entities.Links
 {
   public class ProfileCompetence
   {
-    public int Id { get; set; }
+    //public int Id { get; set; }
     public Guid ProfileId { get; set; }
     public Profile Profile { get; set; }
     public int CompetenceId { get; set; }

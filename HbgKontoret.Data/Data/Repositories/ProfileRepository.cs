@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using HbgKontoret.Data.Entities;
 using HbgKontoret.Infrastructure.Dto;
+using HbgKontoret.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Profile = HbgKontoret.Data.Entities.Profile;
 
 namespace HbgKontoret.Data.Data.Repositories
 {
-  public class ProfileRepository
+  public class ProfileRepository : IProfileRepository
   {
     private readonly AppDbContext _appDbContext;
     private readonly IMapper _mapper;
@@ -23,7 +25,7 @@ namespace HbgKontoret.Data.Data.Repositories
     public async Task<IEnumerable<ProfileDto>> GetAllProfilesAsync()
     {
       var profiles = await _appDbContext.Profiles.ToListAsync();
-      if (profiles!=null)
+      if (profiles != null)
       {
         var profileDtos = _mapper.Map<IEnumerable<Profile>, IEnumerable<ProfileDto>>(profiles);
         return profileDtos;
@@ -74,7 +76,7 @@ namespace HbgKontoret.Data.Data.Repositories
     public async Task<bool> DeleteProfileByIdAsync(Guid id)
     {
       var profile = await _appDbContext.Profiles.FirstOrDefaultAsync(x => x.Id == id);
-      if (profile!=null)
+      if (profile != null)
       {
         _appDbContext.Profiles.Remove(profile);
         await _appDbContext.SaveChangesAsync();
@@ -83,6 +85,25 @@ namespace HbgKontoret.Data.Data.Repositories
       }
 
       return false;
+    }
+
+    public async Task<IEnumerable<CompetenceDto>> GetCompetencesAsync(Guid profileId)
+    {
+      var competences = await _appDbContext.Competences.Include(s => s.ProfileCompetences.Where(t => t.ProfileId == profileId)).ToListAsync();
+      var competenceDtos = _mapper.Map<IEnumerable<Competence>, IEnumerable<CompetenceDto>>(competences);
+
+      return competenceDtos;
+    }
+
+    public async Task<IEnumerable<CompetenceDto>> AddCompetenceAsync(Guid profileId, int competenceId)
+    {
+
+
+
+      var competences = await _appDbContext.Competences.Include(s => s.ProfileCompetences.Where(t => t.ProfileId == profileId)).ToListAsync();
+      var competenceDtos = _mapper.Map<IEnumerable<Competence>, IEnumerable<CompetenceDto>>(competences);
+
+      return competenceDtos;
     }
   }
 }

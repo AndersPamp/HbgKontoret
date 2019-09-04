@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HbgKontoret.Data.Entities;
 using HbgKontoret.Infrastructure.Dto;
+using HbgKontoret.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace HbgKontoret.Data.Data.Repositories
 {
-  public class UserRepository
+  public class UserRepository : IUserRepository
   {
     private readonly AppDbContext _appDbContext;
     private readonly IMapper _mapper;
@@ -28,7 +29,7 @@ namespace HbgKontoret.Data.Data.Repositories
     public async Task<UserDto> GetUserByIdAsync(Guid id)
     {
       var user = await _appDbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
-      
+
       if (user != null)
       {
         return _mapper.Map<User, UserDto>(user);

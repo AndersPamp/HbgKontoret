@@ -12,5 +12,6 @@ namespace HbgKontoret.Infrastructure.Dto
     public string LinkedInUrl { get; set; }
     public string PhoneNo { get; set; }
     public string AboutMe { get; set; }
+    
   }
 }
