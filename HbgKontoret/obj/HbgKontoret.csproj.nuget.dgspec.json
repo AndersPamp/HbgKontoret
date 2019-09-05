@@ -1,26 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Workspace\\Consid\\HbgKontoret\\HbgKontoret.csproj": {}
+    "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret\\HbgKontoret.csproj": {}
   },
   "projects": {
-    "C:\\Workspace\\Consid\\HbgKontoret.Data\\HbgKontoret.Data.csproj": {
+    "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret.Data\\HbgKontoret.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Workspace\\Consid\\HbgKontoret.Data\\HbgKontoret.Data.csproj",
+        "projectUniqueName": "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret.Data\\HbgKontoret.Data.csproj",
         "projectName": "HbgKontoret.Data",
-        "projectPath": "C:\\Workspace\\Consid\\HbgKontoret.Data\\HbgKontoret.Data.csproj",
-        "packagesPath": "C:\\Users\\ander\\.nuget\\packages\\",
-        "outputPath": "C:\\Workspace\\Consid\\HbgKontoret.Data\\obj\\",
+        "projectPath": "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret.Data\\HbgKontoret.Data.csproj",
+        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
+        "outputPath": "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\ander\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"
@@ -32,8 +30,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "C:\\Workspace\\Consid\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj": {
-                "projectPath": "C:\\Workspace\\Consid\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj"
+              "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj": {
+                "projectPath": "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj"
               }
             }
           }
@@ -79,6 +77,10 @@
               "version": "[2.0.3, )",
               "autoReferenced": true
             },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[4.0.1, )"
+            },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
               "version": "[5.5.0, )"
@@ -92,23 +94,21 @@
         }
       }
     },
-    "C:\\Workspace\\Consid\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj": {
+    "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Workspace\\Consid\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj",
         "projectName": "HbgKontoret.Infrastructure",
-        "projectPath": "C:\\Workspace\\Consid\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\ander\\.nuget\\packages\\",
-        "outputPath": "C:\\Workspace\\Consid\\HbgKontoret.Infrastructure\\obj\\",
+        "projectPath": "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
+        "outputPath": "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\ander\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"
@@ -146,23 +146,21 @@
         }
       }
     },
-    "C:\\Workspace\\Consid\\HbgKontoret\\HbgKontoret.csproj": {
+    "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret\\HbgKontoret.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Workspace\\Consid\\HbgKontoret\\HbgKontoret.csproj",
+        "projectUniqueName": "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret\\HbgKontoret.csproj",
         "projectName": "HbgKontoret",
-        "projectPath": "C:\\Workspace\\Consid\\HbgKontoret\\HbgKontoret.csproj",
-        "packagesPath": "C:\\Users\\ander\\.nuget\\packages\\",
-        "outputPath": "C:\\Workspace\\Consid\\HbgKontoret\\obj\\",
+        "projectPath": "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret\\HbgKontoret.csproj",
+        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
+        "outputPath": "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\ander\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.2"
@@ -174,11 +172,11 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "C:\\Workspace\\Consid\\HbgKontoret.Data\\HbgKontoret.Data.csproj": {
-                "projectPath": "C:\\Workspace\\Consid\\HbgKontoret.Data\\HbgKontoret.Data.csproj"
+              "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret.Data\\HbgKontoret.Data.csproj": {
+                "projectPath": "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret.Data\\HbgKontoret.Data.csproj"
               },
-              "C:\\Workspace\\Consid\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj": {
-                "projectPath": "C:\\Workspace\\Consid\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj"
+              "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj": {
+                "projectPath": "C:\\Workspace\\Lia\\HbgKontoret\\HbgKontoret.Infrastructure\\HbgKontoret.Infrastructure.csproj"
               }
             }
           }

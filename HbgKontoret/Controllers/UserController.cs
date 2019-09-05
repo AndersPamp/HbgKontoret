@@ -7,6 +7,7 @@ using HbgKontoret.Data.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using HbgKontoret.Infrastructure.Interfaces;
+using HbgKontoret.Infrastructure.Dto;
 
 namespace HbgKontoret.Controllers
 {
@@ -37,12 +38,12 @@ namespace HbgKontoret.Controllers
 
     // POST: api/User
     [HttpPost]
-    public async Task<ActionResult<User>> AddUser([FromBody]User user)
+    public async Task<ActionResult<UserDto>> AddUser([FromBody]UserDto userDto)
 
     {
       if (ModelState.IsValid)
       {
-        var newUser = await _userService.AddUserAsync(user.FirstName, user.LastName, user.Email);
+        var newUser = await _userService.AddUserAsync(userDto.FirstName, userDto.LastName, userDto.Email);
         return Created("", newUser);
       }
 

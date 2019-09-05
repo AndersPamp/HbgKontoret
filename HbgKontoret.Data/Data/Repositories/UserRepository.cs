@@ -21,10 +21,10 @@ namespace HbgKontoret.Data.Data.Repositories
     }
     public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
     {
-      var users = await _appDbContext.Users.ToListAsync();
-      var userDtos = _mapper.Map<IEnumerable<User>, IEnumerable<UserDto>>(users);
-      return userDtos;
-    }
+            var users = await _appDbContext.Users.ToListAsync();
+            var userDtos = _mapper.Map<IEnumerable<User>, IEnumerable<UserDto>>(users);
+            return userDtos;
+        }
     public async Task<UserDto> GetUserByIdAsync(Guid id)
     {
       var user = await _appDbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
@@ -41,9 +41,8 @@ namespace HbgKontoret.Data.Data.Repositories
       var user = _mapper.Map<UserDto, User>(userDto);
 
       await _appDbContext.Users.AddAsync(user);
-
       await _appDbContext.SaveChangesAsync();
-      return userDto;
+            return _mapper.Map<User, UserDto>(user);
 
     }
     public async Task<UserDto> UpdateUserByIdAsync(Guid id, UserDto userDto)

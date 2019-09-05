@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HbgKontoret.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190902093036_revise_entities")]
-    partial class revise_entities
+    [Migration("20190905075058_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,49 +29,37 @@ namespace HbgKontoret.Data.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<Guid?>("ProfileId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProfileId");
 
                     b.ToTable("Competences");
                 });
 
             modelBuilder.Entity("HbgKontoret.Data.Entities.Links.ProfileCompetence", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("ProfileId");
 
                     b.Property<int>("CompetenceId");
 
-                    b.Property<Guid>("ProfileId");
+                    b.Property<int>("Id");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProfileId", "CompetenceId");
 
                     b.HasIndex("CompetenceId");
-
-                    b.HasIndex("ProfileId");
 
                     b.ToTable("ProfileCompetences");
                 });
 
             modelBuilder.Entity("HbgKontoret.Data.Entities.Links.ProfileOffice", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("ProfileId");
 
                     b.Property<int>("OfficeId");
 
-                    b.Property<Guid>("ProfileId");
+                    b.Property<int>("Id");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProfileId", "OfficeId");
 
                     b.HasIndex("OfficeId");
-
-                    b.HasIndex("ProfileId");
 
                     b.ToTable("ProfileOffices");
                 });
@@ -162,13 +150,6 @@ namespace HbgKontoret.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("HbgKontoret.Data.Entities.Competence", b =>
-                {
-                    b.HasOne("HbgKontoret.Data.Entities.Profile")
-                        .WithMany("Competences")
-                        .HasForeignKey("ProfileId");
                 });
 
             modelBuilder.Entity("HbgKontoret.Data.Entities.Links.ProfileCompetence", b =>
