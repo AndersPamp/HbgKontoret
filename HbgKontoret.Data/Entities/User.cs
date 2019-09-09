@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HbgKontoret.Data.Entities
 {
@@ -10,8 +8,8 @@ namespace HbgKontoret.Data.Entities
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
+    public Profile Profile { get; set; }  
 
-    
     //Current status/project/
   }
 }

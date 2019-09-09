@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using HbgKontoret.Infrastructure.Dto;
 
@@ -13,7 +12,9 @@ namespace HbgKontoret.Infrastructure.Interfaces
     Task<ProfileDto> AddProfileAsync(ProfileDto profileDto);
     Task<ProfileDto> UpdateUserByIdAsync(Guid id, ProfileDto profileDto);
     Task<bool> DeleteProfileByIdAsync(Guid id);
-    Task<IEnumerable<CompetenceDto>> GetCompetencesAsync(Guid profileId);
-    Task<IEnumerable<CompetenceDto>> AddCompetenceAsync(Guid profileId, int competenceId);
+    Task<ProfileCompetenceDto> AddProfileCompetenceAsync(ProfileCompetenceDto profileCompetenceDto);
+    Task<bool> DeleteProfileCompetenceAsync(ProfileCompetenceDto profileCompetenceDto);
+    Task<ProfileOfficeDto> AddProfileOfficeAsync(ProfileOfficeDto profileOfficeDto);
+    Task<bool> DeleteProfileOfficeAsync(ProfileOfficeDto profileOfficeDto);
   }
 }

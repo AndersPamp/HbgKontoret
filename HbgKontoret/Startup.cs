@@ -3,7 +3,9 @@ using AutoMapper;
 using HbgKontoret.Data.Helpers;
 using HbgKontoret.Infrastructure;
 using HbgKontoret.Data.Data;
+using HbgKontoret.Data.Data.Mapping;
 using HbgKontoret.Data.Data.Repositories;
+using HbgKontoret.Data.Entities;
 using HbgKontoret.Data.Services;
 using HbgKontoret.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -31,7 +33,8 @@ namespace HbgKontoret
     {
       services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-      services.AddAutoMapper(typeof(Startup));
+      services.AddAutoMapper(typeof(EntityToDtoProfile));
+      services.AddAutoMapper(typeof(DtoToEntityProfile));
 
       services.AddCors();
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -42,12 +45,14 @@ namespace HbgKontoret
       services.AddScoped<ILoginService, LoginService>();
       services.AddScoped<IUserService, UserService>();
       services.AddScoped<IProfileService, ProfileService>();
-
+      services.AddScoped<IOfficeRepository, OfficeRepository>();
+      services.AddScoped<ICompetenceRepository, CompetenceRepository>();
 
       var appSettingsSection = Configuration.GetSection("AppSettings");
       services.Configure<AppSettings>(appSettingsSection);
 
       var appSettings = appSettingsSection.Get<AppSettings>();
+      #region Authentication
       //var key = Encoding.ASCII.GetBytes(appSettings.Secret);
       //services.AddAuthentication(x =>
       //{
@@ -64,8 +69,9 @@ namespace HbgKontoret
       //    ValidateIssuer = false,
       //    ValidateAudience = false
       //  };
-      //})
-    ;
+      //}) 
+      #endregion
+      ;
 
     }
 
@@ -82,7 +88,9 @@ namespace HbgKontoret
         app.UseHsts();
       }
 
-      //app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+
+      app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
       //app.UseAuthentication();
 
@@ -91,7 +99,7 @@ namespace HbgKontoret
       {
         routes.MapRoute(
           name: "default",
-          template: "{controller?}/{action?}/{id?}");
+          template: "{controller}/{action}/{id?}");
       });
     }
   }

@@ -19,22 +19,13 @@ namespace HbgKontoret.Data.Services
     {
       var userDtos = await _userRepository.GetAllUsersAsync();
 
-      if (userDtos!=null)
-      {
-        return userDtos;
-      }
-
-      return null;
+      return userDtos;
     }
 
     public async Task<UserDto> GetUserByIdAsync(Guid userId)
     {
       var userDto = await _userRepository.GetUserByIdAsync(userId);
-      if (userDto!=null)
-      {
-        return userDto;
-      }
-      return null;
+      return userDto;
     }
 
     public async Task<UserDto> AddUserAsync(string firstName, string lastName, string email)

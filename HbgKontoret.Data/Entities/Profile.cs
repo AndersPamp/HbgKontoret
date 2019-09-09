@@ -14,5 +14,6 @@ namespace HbgKontoret.Data.Entities
     public string PhoneNo { get; set; }
     public string AboutMe { get; set; }
     public IList<ProfileCompetence> ProfileCompetences { get; set; }
+    public IList<ProfileOffice> ProfileOffices { get; set; }  
   }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using HbgKontoret.Data.Entities;
@@ -22,17 +22,56 @@ namespace HbgKontoret.Data.Data.Repositories
     }
     public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
     {
-            var users = await _appDbContext.Users.ToListAsync();
-            var userDtos = _mapper.Map<IEnumerable<User>, IEnumerable<UserDto>>(users);
-            return userDtos;
-        }
+      var users = await _appDbContext.Users.ToListAsync();
+      var userDtos = _mapper.Map<IEnumerable<User>, IEnumerable<UserDto>>(users);
+      return userDtos;
+    }
     public async Task<UserDto> GetUserByIdAsync(Guid id)
     {
-      var user = await _appDbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+      var user = await _appDbContext.Users.Include(pr => pr.Profile).FirstOrDefaultAsync(x => x.Id == id);
 
       if (user != null)
       {
-        return _mapper.Map<User, UserDto>(user);
+        var profile = await _appDbContext.Profiles.Include(x => x.ProfileOffices).ThenInclude(x => x.Office).
+          Include(x => x.ProfileCompetences).
+          ThenInclude(x => x.Competence).FirstOrDefaultAsync(x => x.Id == user.Profile.Id);
+
+        var userDto = _mapper.Map<User, UserDto>(user);
+        {
+          userDto.ProfileDto = new ProfileDto
+          {
+            Id = user.Profile.Id,
+            Manager = user.Profile.Manager,
+            ImageUrl = user.Profile.ImageUrl,
+            LinkedInUrl = user.Profile.LinkedInUrl,
+            AboutMe = user.Profile.AboutMe,
+          };
+
+          var profileDto = new ProfileDto
+          {
+            Id = profile.Id,
+            Manager = profile.Manager,
+            ImageUrl = profile.ImageUrl,
+            LinkedInUrl = profile.LinkedInUrl,
+            PhoneNo = profile.PhoneNo,
+            AboutMe = profile.AboutMe,
+            CompetenceDtos = profile.ProfileCompetences.Where(ct => ct.ProfileId == profile.Id).Select(ct => new CompetenceDto
+            {
+              Id = ct.Competence.Id,
+              Name = ct.Competence.Name
+            }).ToList(),
+            OfficeDtos = profile.ProfileOffices.Where(of => of.ProfileId == profile.Id).Select(of => new OfficeDto
+            {
+              Id = of.Office.Id,
+              Name = of.Office.Name,
+              Address = of.Office.Address,
+              Manager = of.Office.Manager,
+              Phone = of.Office.Phone
+            }).ToList()
+          };
+          userDto.ProfileDto = profileDto;
+          return userDto;
+        };
       }
 
       return null;
@@ -43,7 +82,7 @@ namespace HbgKontoret.Data.Data.Repositories
 
       await _appDbContext.Users.AddAsync(user);
       await _appDbContext.SaveChangesAsync();
-            return _mapper.Map<User, UserDto>(user);
+      return _mapper.Map<User, UserDto>(user);
 
     }
     public async Task<UserDto> UpdateUserByIdAsync(Guid id, UserDto userDto)

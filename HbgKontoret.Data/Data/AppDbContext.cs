@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using HbgKontoret.Data.Entities;
+﻿using HbgKontoret.Data.Entities;
 using HbgKontoret.Data.Entities.Links;
 using Microsoft.EntityFrameworkCore;
 using DbContext = Microsoft.EntityFrameworkCore.DbContext;

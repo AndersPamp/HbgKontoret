@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HbgKontoret.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190903141347_Initial")]
-    partial class Initial
+    [Migration("20190909112405_restore_after_git")]
+    partial class restore_after_git
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -143,7 +143,11 @@ namespace HbgKontoret.Data.Migrations
 
                     b.Property<string>("LastName");
 
+                    b.Property<Guid?>("ProfileId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProfileId");
 
                     b.ToTable("Users");
                 });
@@ -164,12 +168,12 @@ namespace HbgKontoret.Data.Migrations
             modelBuilder.Entity("HbgKontoret.Data.Entities.Links.ProfileOffice", b =>
                 {
                     b.HasOne("HbgKontoret.Data.Entities.Office", "Office")
-                        .WithMany()
+                        .WithMany("ProfileOffices")
                         .HasForeignKey("OfficeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("HbgKontoret.Data.Entities.Profile", "Profile")
-                        .WithMany()
+                        .WithMany("ProfileOffices")
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -179,6 +183,13 @@ namespace HbgKontoret.Data.Migrations
                     b.HasOne("HbgKontoret.Data.Entities.Login")
                         .WithMany("Roles")
                         .HasForeignKey("LoginId");
+                });
+
+            modelBuilder.Entity("HbgKontoret.Data.Entities.User", b =>
+                {
+                    b.HasOne("HbgKontoret.Data.Entities.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId");
                 });
 #pragma warning restore 612, 618
         }
