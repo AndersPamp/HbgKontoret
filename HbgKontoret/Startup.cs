@@ -33,10 +33,20 @@ namespace HbgKontoret
         {
             services.AddDbContext<AppDbContext>(options =>
               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(DtoToEntityProfile));
+            services.AddAutoMapper(typeof(EntityToDtoProfile));
 
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "Helsingborgskontoret"
+                });
+            });
 
             services.AddScoped<LoginRepository>();
             services.AddScoped<UserRepository>();
@@ -93,6 +103,11 @@ namespace HbgKontoret
                 routes.MapRoute(
             name: "default",
             template: "{controller?}/{action?}/{id?}");
+            });
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Helsingborgskontoret");
             });
         }
     }
