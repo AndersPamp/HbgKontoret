@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
-using HbgKontoret.Data.Data.Repositories;
 using HbgKontoret.Infrastructure.Dto;
 using HbgKontoret.Infrastructure.Interfaces;
-using Profile = HbgKontoret.Data.Entities.Profile;
 
 namespace HbgKontoret.Data.Services
 {
   public class ProfileService : IProfileService
   {
-    private readonly ProfileRepository _profileRepository;
+    private readonly IProfileRepository _profileRepository;
 
-    public ProfileService(ProfileRepository profileRepository)
+    public ProfileService(IProfileRepository profileRepository)
     {
       _profileRepository = profileRepository;
     }
@@ -26,7 +22,12 @@ namespace HbgKontoret.Data.Services
     public async Task<ProfileDto> GetProfileByIdAsync(Guid profileId)
     {
       var profile = await _profileRepository.GetProfileByIdAsync(profileId);
-      return profile;
+      if (profile != null)
+      {
+        return profile;
+      }
+
+      return null;
     }
     public async Task<ProfileDto> AddProfileAsync(string manager, string imageUrl, string linkedinUrl, string phoneNumber, string aboutMe)
     {
@@ -38,26 +39,25 @@ namespace HbgKontoret.Data.Services
         PhoneNo = phoneNumber,
         AboutMe = aboutMe
       };
-      await _profileRepository.AddProfileAsync(newProfileDto);
+      if (await _profileRepository.AddProfileAsync(newProfileDto) != null)
+      {
+        return newProfileDto;
+      }
 
-      return newProfileDto;
+      return null;
     }
-
-
-    public async Task<ProfileDto> EditProfileAsync(Guid profileId, string manager, string imageUrl, string linkedinUrl, string phoneNumber,
-      string aboutMe)
+    public async Task<ProfileDto> EditProfileAsync(Guid profileId, ProfileDto profileDto)
     {
       var profileForEdit = await _profileRepository.GetProfileByIdAsync(profileId);
-      profileForEdit.Manager = manager;
-      profileForEdit.ImageUrl = imageUrl;
-      profileForEdit.LinkedInUrl = linkedinUrl;
-      profileForEdit.PhoneNo = phoneNumber;
-      profileForEdit.AboutMe = aboutMe;
+      profileForEdit.Manager = profileDto.Manager;
+      profileForEdit.ImageUrl = profileDto.ImageUrl;
+      profileForEdit.LinkedInUrl = profileDto.LinkedInUrl;
+      profileForEdit.PhoneNo = profileDto.PhoneNo;
+      profileForEdit.AboutMe = profileDto.AboutMe;
 
       await _profileRepository.UpdateUserByIdAsync(profileId, profileForEdit);
       return profileForEdit;
     }
-
     public async Task<bool> DeleteProfileAsync(Guid profileId)
     {
       var profileForDeletion = await _profileRepository.GetProfileByIdAsync(profileId);

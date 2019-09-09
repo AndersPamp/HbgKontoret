@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using HbgKontoret.Data.Entities;
+using HbgKontoret.Data.Communication;
+using HbgKontoret.Infrastructure.Dto;
 using HbgKontoret.Infrastructure.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -22,63 +20,91 @@ namespace HbgKontoret.Controllers
       _profileService = profileService;
     }
 
-    // GET: api/Profile
+    // GET: api/ProfileDto
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Profile>>> GetAllProfiles()
+    public async Task<ActionResult<JsonResponse>> GetAllProfileDtos()
     {
-      return Ok(await _profileService.GetAllProfileAsync());
-    }
-
-    // GET: api/Profile/5
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Profile>> GetProfileById(Guid id)
-    {
-      var profile = await _profileService.GetProfileByIdAsync(id);
-
-      if (profile != null)
+      var profileDtos = await _profileService.GetAllProfileAsync();
+      if (profileDtos != null)
       {
-        return Ok(profile);
+        return Ok(new JsonResponse
+        {
+          Data = profileDtos,
+          TotalHits = profileDtos.Count()
+        });
       }
 
-      return NotFound("No profile with that id found");
+      return NotFound(new JsonResponse
+      {
+        Error = true,
+        Message = "All makt åt Tengil, vår befriare!"
+      });
     }
 
-    // POST: api/Profile
+    // GET: api/ProfileDto/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<JsonResponse>> GetProfileDtoById(Guid id)
+    {
+      var profileDto = await _profileService.GetProfileByIdAsync(id);
+
+      if (profileDto != null)
+      {
+        return Ok(new JsonResponse
+        {
+          Data = profileDto
+        });
+      }
+
+      return NotFound(new JsonResponse
+      {
+        Error = true,
+        Message = "All makt åt Tengil, vår befriare!"
+      });
+    }
+
+    // POST: api/ProfileDto
     [HttpPost]
-    public async Task<ActionResult<Profile>> AddProfile([FromBody] Profile profile)
+    public async Task<ActionResult<JsonResponse>> AddProfileDto([FromBody] ProfileDto ProfileDto)
     {
       if (ModelState.IsValid)
       {
-        var newProfile = await _profileService.AddProfileAsync(profile.Manager, profile.ImageUrl, profile.LinkedInUrl,
-          profile.PhoneNo, profile.AboutMe);
+        var newProfileDto = await _profileService.AddProfileAsync(ProfileDto.Manager, ProfileDto.ImageUrl, ProfileDto.LinkedInUrl,
+          ProfileDto.PhoneNo, ProfileDto.AboutMe);
 
-        return Created("", newProfile);
+        return Created("", new JsonResponse
+        {
+          Data = newProfileDto
+        });
       }
 
-      return BadRequest("All makt åt Tengil, vår befriare!");
-    }
-
-    // PUT: api/Profile/5
-    [HttpPut("{id}")]
-    public async Task<ActionResult<Profile>> EditProfile(Guid id, [FromBody] Profile profile)
-    {
-      if (await _profileService.GetProfileByIdAsync(id) != null)
+      return BadRequest(new JsonResponse
       {
-        await _profileService.EditProfileAsync(id, profile.Manager, profile.ImageUrl, profile.LinkedInUrl,
-          profile.PhoneNo, profile.AboutMe);
-
-        return Ok(profile);
-      }
-
-      return NotFound();
-
+        Error = true,
+        Message = "All makt åt Tengil, vår befriare!"
+      });
     }
 
-    ////PATCH: api/profile/5
+    // PUT: api/ProfileDto/5
+    [HttpPut("{id}")]
+    public async Task<ActionResult<ProfileDto>> EditProfileDto(Guid id, [FromBody] ProfileDto profileDto)
+    {
+      if (ModelState.IsValid)
+      {
+        var result = await _profileService.EditProfileAsync(id, profileDto);
+      }
+
+      return BadRequest(new JsonResponse
+      {
+        Error = true,
+        Message = "All makt åt Tengil, vår befriare!"
+      });
+    }
+
+    ////PATCH: api/ProfileDto/5
     //[HttpPatch("{id}")]
-    //public async Task<ActionResult<Profile>> EditProfile(Guid id, [FromBody]JsonPatchDocument<Profile> value)
+    //public async Task<ActionResult<ProfileDto>> EditProfileDto(Guid id, [FromBody]JsonPatchDocument<ProfileDto> value)
     //{
-    //  var result = await _profileService.GetProfileByIdAsync(id);
+    //  var result = await _ProfileDtoService.GetProfileDtoByIdAsync(id);
     //  if (result!=null)
     //  {
     //   value.ApplyTo(result, ModelState);
@@ -91,20 +117,21 @@ namespace HbgKontoret.Controllers
     //}
 
     // DELETE: api/ApiWithActions/5
+
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteProfile(Guid id)
+    public async Task<ActionResult> DeleteProfileDto(Guid id)
     {
-      if (await _profileService.GetProfileByIdAsync(id)!=null)
+      if (await _profileService.GetProfileByIdAsync(id) != null)
       {
         if (await _profileService.DeleteProfileAsync(id))
         {
           return Ok();
         }
 
-        return NotFound();
+        return NotFound("All makt åt Tengil, vår befriare!");
       }
 
-      return NotFound();
+      return NotFound("All makt åt Tengil, vår befriare!");
     }
   }
 }

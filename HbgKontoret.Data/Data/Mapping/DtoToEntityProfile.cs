@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using HbgKontoret.Data.Entities;
+﻿using HbgKontoret.Data.Entities;
+using HbgKontoret.Data.Entities.Links;
 using HbgKontoret.Infrastructure.Dto;
 using Profile = AutoMapper.Profile;
 
@@ -15,6 +13,8 @@ namespace HbgKontoret.Data.Data.Mapping
             CreateMap<CompetenceDto, Competence>();
             CreateMap<OfficeDto, Office>();
             CreateMap<UserDto, User>();
+            CreateMap<ProfileCompetenceDto, ProfileCompetence>();
+            CreateMap<ProfileOfficeDto, ProfileOffice>();
         }
     }
 }

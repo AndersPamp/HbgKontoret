@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
-using HbgKontoret.Data.Data.Repositories;
-using HbgKontoret.Data.Entities;
 using HbgKontoret.Infrastructure.Dto;
 using HbgKontoret.Infrastructure.Interfaces;
 
@@ -12,9 +8,9 @@ namespace HbgKontoret.Data.Services
 {
   public class UserService : IUserService
   {
-    private readonly UserRepository _userRepository;
+    private readonly IUserRepository _userRepository;
 
-    public UserService(UserRepository userRepository)
+    public UserService(IUserRepository userRepository)
     {
       _userRepository = userRepository;
     }
@@ -23,22 +19,13 @@ namespace HbgKontoret.Data.Services
     {
       var userDtos = await _userRepository.GetAllUsersAsync();
 
-      if (userDtos!=null)
-      {
-        return userDtos;
-      }
-
-      return null;
+      return userDtos;
     }
 
     public async Task<UserDto> GetUserByIdAsync(Guid userId)
     {
       var userDto = await _userRepository.GetUserByIdAsync(userId);
-      if (userDto!=null)
-      {
-        return userDto;
-      }
-      return null;
+      return userDto;
     }
 
     public async Task<UserDto> AddUserAsync(string firstName, string lastName, string email)

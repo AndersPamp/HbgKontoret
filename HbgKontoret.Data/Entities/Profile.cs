@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using HbgKontoret.Data.Entities.Links;
 
 namespace HbgKontoret.Data.Entities
 {
@@ -12,5 +13,7 @@ namespace HbgKontoret.Data.Entities
     public string LinkedInUrl { get; set; }
     public string PhoneNo { get; set; }
     public string AboutMe { get; set; }
+    public IList<ProfileCompetence> ProfileCompetences { get; set; }
+    public IList<ProfileOffice> ProfileOffices { get; set; }  
   }
 }

@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using HbgKontoret.Data.Entities.Links;
 using HbgKontoret.Infrastructure.Dto;
+using HbgKontoret.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Profile = HbgKontoret.Data.Entities.Profile;
 
 namespace HbgKontoret.Data.Data.Repositories
 {
-  public class ProfileRepository
+  public class ProfileRepository : IProfileRepository
   {
     private readonly AppDbContext _appDbContext;
     private readonly IMapper _mapper;
@@ -23,8 +25,9 @@ namespace HbgKontoret.Data.Data.Repositories
     public async Task<IEnumerable<ProfileDto>> GetAllProfilesAsync()
     {
       var profiles = await _appDbContext.Profiles.ToListAsync();
-      if (profiles!=null)
+      if (profiles != null)
       {
+
         var profileDtos = _mapper.Map<IEnumerable<Profile>, IEnumerable<ProfileDto>>(profiles);
         return profileDtos;
       }
@@ -33,13 +36,45 @@ namespace HbgKontoret.Data.Data.Repositories
 
     public async Task<ProfileDto> GetProfileByIdAsync(Guid id)
     {
-      var profile = await _appDbContext.Profiles.FirstOrDefaultAsync(x => x.Id == id);
-      if (profile != null)
-      {
-        return _mapper.Map<Profile, ProfileDto>(profile);
-      }
+      var profile = await _appDbContext.Profiles.Include(x => x.ProfileOffices).ThenInclude(x=>x.Office).
+        Include(x => x.ProfileCompetences).
+        ThenInclude(x => x.Competence).FirstOrDefaultAsync(x => x.Id == id);
 
-      return null;
+      #region lambda alternative
+      //var queryResult = 
+      //  from ct in profile.ProfileCompetences
+      //  where ct.ProfileId == profile.Id
+      //  select new Competence()
+      //  {
+      //    Id = ct.Competence.Id,
+      //    Name = ct.Competence.Name
+      //  };
+
+      #endregion
+
+      var profileDto = new ProfileDto
+      {
+        Id = profile.Id,
+        Manager = profile.Manager,
+        ImageUrl = profile.ImageUrl,
+        LinkedInUrl = profile.LinkedInUrl,
+        PhoneNo = profile.PhoneNo,
+        AboutMe = profile.AboutMe,
+        CompetenceDtos = profile.ProfileCompetences.Where(ct => ct.ProfileId == profile.Id).Select(ct => new CompetenceDto
+        {
+          Id = ct.Competence.Id,
+          Name = ct.Competence.Name
+        }).ToList(),
+        OfficeDtos = profile.ProfileOffices.Where(of => of.ProfileId == profile.Id).Select(of => new OfficeDto
+        {
+          Id = of.Office.Id,
+          Name = of.Office.Name,
+          Address = of.Office.Address,
+          Manager = of.Office.Manager,
+          Phone = of.Office.Phone
+        }).ToList()
+      };
+      return profileDto;
     }
 
     public async Task<ProfileDto> AddProfileAsync(ProfileDto profileDto)
@@ -74,7 +109,7 @@ namespace HbgKontoret.Data.Data.Repositories
     public async Task<bool> DeleteProfileByIdAsync(Guid id)
     {
       var profile = await _appDbContext.Profiles.FirstOrDefaultAsync(x => x.Id == id);
-      if (profile!=null)
+      if (profile != null)
       {
         _appDbContext.Profiles.Remove(profile);
         await _appDbContext.SaveChangesAsync();
@@ -84,5 +119,95 @@ namespace HbgKontoret.Data.Data.Repositories
 
       return false;
     }
+
+    public async Task<ProfileCompetenceDto> AddProfileCompetenceAsync(ProfileCompetenceDto profileCompetenceDto)
+    {
+      var newProfileCompetence=new ProfileCompetence
+      {
+        ProfileId = profileCompetenceDto.ProfileId,
+        CompetenceId = profileCompetenceDto.CompetenceId
+      };
+      await _appDbContext.ProfileCompetences.AddAsync(newProfileCompetence);
+      await _appDbContext.SaveChangesAsync();
+
+      return _mapper.Map<ProfileCompetence, ProfileCompetenceDto>(newProfileCompetence);
+    }
+
+    public async Task<bool> DeleteProfileCompetenceAsync(ProfileCompetenceDto profileCompetenceDto)
+    {
+      var pcForDeletion = await _appDbContext.ProfileCompetences.Where(pid => pid.ProfileId == profileCompetenceDto.ProfileId)
+        .FirstOrDefaultAsync(cid => cid.CompetenceId == profileCompetenceDto.CompetenceId);
+      if (pcForDeletion!=null)
+      {
+        _appDbContext.ProfileCompetences.Remove(pcForDeletion);
+        await _appDbContext.SaveChangesAsync();
+        return true;
+      }
+
+      return false;
+    }
+
+    public async Task<ProfileOfficeDto> AddProfileOfficeAsync(ProfileOfficeDto profileOfficeDto)
+    {
+      var newProfileOffice=new ProfileOffice
+      {
+        ProfileId = profileOfficeDto.ProfileId,
+        OfficeId = profileOfficeDto.OfficeId
+      };
+      await _appDbContext.ProfileOffices.AddAsync(newProfileOffice);
+      await _appDbContext.SaveChangesAsync();
+      return _mapper.Map<ProfileOffice, ProfileOfficeDto>(newProfileOffice);
+    }
+
+    public async Task<bool> DeleteProfileOfficeAsync(ProfileOfficeDto profileOfficeDto)
+    {
+      var poForDeletion = await _appDbContext.ProfileOffices.Where(pid => pid.ProfileId == profileOfficeDto.ProfileId)
+        .FirstOrDefaultAsync(oid => oid.OfficeId == profileOfficeDto.OfficeId);
+
+      if (poForDeletion!=null)
+      {
+        _appDbContext.ProfileOffices.Remove(poForDeletion);
+        return true;
+      }
+
+      return false;
+    }
+
+    //public async Task<IEnumerable<CompetenceDto>> GetCompetencesAsync(Guid profileId)
+    //{
+    //  if (profileId != Guid.Empty)
+    //  {
+    //    var competences = await _appDbContext.Competences.Include(s => s.ProfileCompetences.Where(t => t.ProfileId == profileId)).ToListAsync();
+
+    //    if (competences != null)
+    //    {
+    //      var competenceDtos = _mapper.Map<IEnumerable<Competence>, IEnumerable<CompetenceDto>>(competences);
+
+    //      return competenceDtos;
+    //    }
+    //    return null;
+    //  }
+    //  return null;
+    //}
+
+    //public async Task<IEnumerable<CompetenceDto>> AddCompetenceAsync(Guid profileId, int competenceId)
+    //{
+    //  if (profileId != Guid.Empty && competenceId != 0)
+    //  {
+    //    var profileCompetence = new ProfileCompetence()
+    //    {
+    //      CompetenceId = competenceId,
+    //      ProfileId = profileId
+    //    };
+    //    await _appDbContext.ProfileCompetences.AddAsync(profileCompetence);
+
+    //    var competences = await _appDbContext.Competences.Include(s => s.ProfileCompetences.Where(t => t.ProfileId == profileId)).ToListAsync();
+    //    var competenceDtos = _mapper.Map<IEnumerable<Competence>, IEnumerable<CompetenceDto>>(competences);
+
+    //    return competenceDtos;
+    //  }
+
+    //  return null;
+    //}
   }
 }

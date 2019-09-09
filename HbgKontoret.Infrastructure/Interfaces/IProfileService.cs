@@ -13,9 +13,6 @@ namespace HbgKontoret.Infrastructure.Interfaces
     Task<bool> DeleteProfileAsync(Guid profileId);
     Task<IEnumerable<ProfileDto>> GetAllProfileAsync();
     Task<ProfileDto> GetProfileByIdAsync(Guid profileId);
-    //Task<Profile> EditProfileAsync(Guid id, JsonPatchDocument<Profile> profile);
-
-
-    Task<ProfileDto> EditProfileAsync(Guid profileId, string manager, string imageUrl, string linkedinUrl, string phoneNumber, string aboutMe);
+    Task<ProfileDto> EditProfileAsync(Guid profileId, ProfileDto profileDto);
   }
 }

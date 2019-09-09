@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HbgKontoret.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class restore_after_git : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,20 +68,6 @@ namespace HbgKontoret.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -106,8 +92,7 @@ namespace HbgKontoret.Data.Migrations
                 columns: table => new
                 {
                     ProfileId = table.Column<Guid>(nullable: false),
-                    CompetenceId = table.Column<int>(nullable: false),
-                    Id = table.Column<int>(nullable: false)
+                    CompetenceId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,8 +116,7 @@ namespace HbgKontoret.Data.Migrations
                 columns: table => new
                 {
                     ProfileId = table.Column<Guid>(nullable: false),
-                    OfficeId = table.Column<int>(nullable: false),
-                    Id = table.Column<int>(nullable: false)
+                    OfficeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -151,6 +135,27 @@ namespace HbgKontoret.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    ProfileId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_Profiles_ProfileId",
+                        column: x => x.ProfileId,
+                        principalTable: "Profiles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ProfileCompetences_CompetenceId",
                 table: "ProfileCompetences",
@@ -165,6 +170,11 @@ namespace HbgKontoret.Data.Migrations
                 name: "IX_Roles_LoginId",
                 table: "Roles",
                 column: "LoginId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_ProfileId",
+                table: "Users",
+                column: "ProfileId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -188,10 +198,10 @@ namespace HbgKontoret.Data.Migrations
                 name: "Offices");
 
             migrationBuilder.DropTable(
-                name: "Profiles");
+                name: "Logins");
 
             migrationBuilder.DropTable(
-                name: "Logins");
+                name: "Profiles");
         }
     }
 }

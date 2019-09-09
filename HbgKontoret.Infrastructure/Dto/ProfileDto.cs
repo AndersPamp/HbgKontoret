@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace HbgKontoret.Infrastructure.Dto
 {
   public class ProfileDto
@@ -12,5 +13,7 @@ namespace HbgKontoret.Infrastructure.Dto
     public string LinkedInUrl { get; set; }
     public string PhoneNo { get; set; }
     public string AboutMe { get; set; }
+    public List<CompetenceDto> CompetenceDtos { get; set; }
+    public List<OfficeDto> OfficeDtos { get; set; }
   }
 }
