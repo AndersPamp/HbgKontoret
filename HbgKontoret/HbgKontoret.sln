@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HbgKontoret", "HbgKontoret.csproj", "{DA1B4905-1C56-43C4-948D-059C850B659B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HbgKontoret.Data", "..\HbgKontoret.Data_NEW\HbgKontoret.Data\HbgKontoret.Data.csproj", "{4B449507-8EA6-41C3-B4A8-753ECCF51BE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HbgKontoret.Data", "..\HbgKontoret.Data\HbgKontoret.Data\HbgKontoret.Data.csproj", "{4B449507-8EA6-41C3-B4A8-753ECCF51BE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HbgKontoret.Infrastructure", "..\HbgKontoret.Infrastructure_NEW\HbgKontoret.Infrastructure\HbgKontoret.Infrastructure.csproj", "{9D523E8E-DAE7-43A6-A331-EED6FE5305F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HbgKontoret.Infrastructure", "..\HbgKontoret.Infrastructure\HbgKontoret.Infrastructure\HbgKontoret.Infrastructure.csproj", "{9D523E8E-DAE7-43A6-A331-EED6FE5305F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\HbgKontoret.Infrastructure_NEW\HbgKontoret.Infrastructure\HbgKontoret.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\HbgKontoret.Infrastructure\HbgKontoret.Infrastructure\HbgKontoret.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

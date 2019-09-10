@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HbgKontoret.Data_NEW\HbgKontoret.Data\HbgKontoret.Data.csproj" />
+    <ProjectReference Include="..\HbgKontoret.Data\HbgKontoret.Data\HbgKontoret.Data.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="föskljdfhg" /></VisualStudio></ProjectExtensions>
