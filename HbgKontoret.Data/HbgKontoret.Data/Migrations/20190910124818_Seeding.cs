@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HbgKontoret.Data.Migrations
 {
-    public partial class restore_after_git : Migration
+    public partial class Seeding : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
