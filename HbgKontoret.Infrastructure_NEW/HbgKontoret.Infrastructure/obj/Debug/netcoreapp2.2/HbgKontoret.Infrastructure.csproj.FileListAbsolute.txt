@@ -1,0 +1,11 @@
+C:\Workspace\HbgKontoret\HbgKontoret.Infrastructure_NEW\HbgKontoret.Infrastructure\bin\Debug\netcoreapp2.2\HbgKontoret.Infrastructure.deps.json
+C:\Workspace\HbgKontoret\HbgKontoret.Infrastructure_NEW\HbgKontoret.Infrastructure\bin\Debug\netcoreapp2.2\HbgKontoret.Infrastructure.runtimeconfig.json
+C:\Workspace\HbgKontoret\HbgKontoret.Infrastructure_NEW\HbgKontoret.Infrastructure\bin\Debug\netcoreapp2.2\HbgKontoret.Infrastructure.runtimeconfig.dev.json
+C:\Workspace\HbgKontoret\HbgKontoret.Infrastructure_NEW\HbgKontoret.Infrastructure\bin\Debug\netcoreapp2.2\HbgKontoret.Infrastructure.dll
+C:\Workspace\HbgKontoret\HbgKontoret.Infrastructure_NEW\HbgKontoret.Infrastructure\bin\Debug\netcoreapp2.2\HbgKontoret.Infrastructure.pdb
+C:\Workspace\HbgKontoret\HbgKontoret.Infrastructure_NEW\HbgKontoret.Infrastructure\obj\Debug\netcoreapp2.2\HbgKontoret.Infrastructure.csprojAssemblyReference.cache
+C:\Workspace\HbgKontoret\HbgKontoret.Infrastructure_NEW\HbgKontoret.Infrastructure\obj\Debug\netcoreapp2.2\HbgKontoret.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Workspace\HbgKontoret\HbgKontoret.Infrastructure_NEW\HbgKontoret.Infrastructure\obj\Debug\netcoreapp2.2\HbgKontoret.Infrastructure.AssemblyInfoInputs.cache
+C:\Workspace\HbgKontoret\HbgKontoret.Infrastructure_NEW\HbgKontoret.Infrastructure\obj\Debug\netcoreapp2.2\HbgKontoret.Infrastructure.AssemblyInfo.cs
+C:\Workspace\HbgKontoret\HbgKontoret.Infrastructure_NEW\HbgKontoret.Infrastructure\obj\Debug\netcoreapp2.2\HbgKontoret.Infrastructure.dll
+C:\Workspace\HbgKontoret\HbgKontoret.Infrastructure_NEW\HbgKontoret.Infrastructure\obj\Debug\netcoreapp2.2\HbgKontoret.Infrastructure.pdb
