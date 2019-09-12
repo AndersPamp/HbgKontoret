@@ -15,6 +15,7 @@ namespace HbgKontoret.Data.Data.Mapping
             CreateMap<User, UserDto>();
             CreateMap<ProfileOffice, ProfileOfficeDto>();
             CreateMap<ProfileCompetence, ProfileCompetenceDto>();
+            CreateMap<RoleDto, Role>();
         }
     }
 }

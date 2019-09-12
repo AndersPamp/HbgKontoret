@@ -8,6 +8,8 @@ namespace HbgKontoret.Data.Entities
   public class Profile
   {
     public Guid Id { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
     public string Manager { get; set; }
     public string ImageUrl { get; set; }
     public string LinkedInUrl { get; set; }

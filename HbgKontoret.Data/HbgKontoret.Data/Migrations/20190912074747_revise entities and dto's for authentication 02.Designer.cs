@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HbgKontoret.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190910124818_Seedin")]
-    partial class Seedin
+    [Migration("20190912074747_revise entities and dto's for authentication 02")]
+    partial class reviseentitiesanddtosforauthentication02
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -60,22 +60,6 @@ namespace HbgKontoret.Data.Migrations
                     b.ToTable("ProfileOffices");
                 });
 
-            modelBuilder.Entity("HbgKontoret.Data.Entities.Login", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Password");
-
-                    b.Property<string>("Token");
-
-                    b.Property<string>("Username");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Logins");
-                });
-
             modelBuilder.Entity("HbgKontoret.Data.Entities.Office", b =>
                 {
                     b.Property<int>("Id")
@@ -102,7 +86,11 @@ namespace HbgKontoret.Data.Migrations
 
                     b.Property<string>("AboutMe");
 
+                    b.Property<string>("FirstName");
+
                     b.Property<string>("ImageUrl");
+
+                    b.Property<string>("LastName");
 
                     b.Property<string>("LinkedInUrl");
 
@@ -121,13 +109,9 @@ namespace HbgKontoret.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<Guid?>("LoginId");
-
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LoginId");
 
                     b.ToTable("Roles");
                 });
@@ -139,15 +123,13 @@ namespace HbgKontoret.Data.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("Password");
 
-                    b.Property<string>("LastName");
+                    b.Property<Guid>("ProfileId");
 
-                    b.Property<Guid?>("ProfileId");
+                    b.Property<int>("RoleId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProfileId");
 
                     b.ToTable("Users");
                 });
@@ -176,20 +158,6 @@ namespace HbgKontoret.Data.Migrations
                         .WithMany("ProfileOffices")
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("HbgKontoret.Data.Entities.Role", b =>
-                {
-                    b.HasOne("HbgKontoret.Data.Entities.Login")
-                        .WithMany("Roles")
-                        .HasForeignKey("LoginId");
-                });
-
-            modelBuilder.Entity("HbgKontoret.Data.Entities.User", b =>
-                {
-                    b.HasOne("HbgKontoret.Data.Entities.Profile", "Profile")
-                        .WithMany()
-                        .HasForeignKey("ProfileId");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,21 +1,16 @@
-﻿using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using HbgKontoret.Data.Helpers;
-using HbgKontoret.Infrastructure;
 using HbgKontoret.Data.Data;
 using HbgKontoret.Data.Data.Mapping;
 using HbgKontoret.Data.Data.Repositories;
-using HbgKontoret.Data.Entities;
 using HbgKontoret.Data.Services;
 using HbgKontoret.Infrastructure.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 
 namespace HbgKontoret
 {
@@ -33,16 +28,15 @@ namespace HbgKontoret
     {
       services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
       services.AddAutoMapper(typeof(EntityToDtoProfile));
       services.AddAutoMapper(typeof(DtoToEntityProfile));
 
-      services.AddCors();
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+      //services.AddMvcCore().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-      services.AddScoped<LoginRepository>();
       services.AddScoped<IUserRepository, UserRepository>();
       services.AddScoped<IProfileRepository, ProfileRepository>();
-      services.AddScoped<ILoginService, LoginService>();
       services.AddScoped<IUserService, UserService>();
       services.AddScoped<IProfileService, ProfileService>();
       services.AddScoped<IOfficeRepository, OfficeRepository>();
@@ -88,13 +82,11 @@ namespace HbgKontoret
         app.UseHsts();
       }
 
-
-
-      app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+      //app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
       //app.UseAuthentication();
 
-      app.UseHttpsRedirection();
+      //app.UseHttpsRedirection();
       app.UseMvc(routes =>
       {
         routes.MapRoute(
