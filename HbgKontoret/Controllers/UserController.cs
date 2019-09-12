@@ -22,6 +22,7 @@ namespace HbgKontoret.Controllers
       _userService = userService;
     }
     // GET: api/User
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<User>>> GetAll()
     {
