@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using HbgKontoret.Data.Communication;
 using HbgKontoret.Infrastructure.Dto;
 using HbgKontoret.Infrastructure.Interfaces;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HbgKontoret.Controllers
 {
+  [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class ProfileOfficeController : ControllerBase
@@ -22,6 +20,7 @@ namespace HbgKontoret.Controllers
     }
 
     // POST: api/ProfileOffice
+    
     [HttpPost]
     public async Task<ActionResult<JsonResponse>> Post([FromBody] ProfileOfficeDto profileOfficeDto)
     {

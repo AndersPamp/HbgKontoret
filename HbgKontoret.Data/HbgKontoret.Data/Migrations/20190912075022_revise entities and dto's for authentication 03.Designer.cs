@@ -4,14 +4,16 @@ using HbgKontoret.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HbgKontoret.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190912075022_revise entities and dto's for authentication 03")]
+    partial class reviseentitiesanddtosforauthentication03
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,9 +127,9 @@ namespace HbgKontoret.Data.Migrations
                     b.Property<string>("Password")
                         .IsRequired();
 
-                    b.Property<Guid?>("ProfileId");
+                    b.Property<Guid>("ProfileId");
 
-                    b.Property<int?>("RoleId");
+                    b.Property<int>("RoleId");
 
                     b.HasKey("Id");
 

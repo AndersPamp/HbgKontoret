@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using HbgKontoret.Data.Communication;
 using HbgKontoret.Infrastructure.Dto;
 using HbgKontoret.Infrastructure.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HbgKontoret.Controllers
 {
+  [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class CompetenceController : ControllerBase

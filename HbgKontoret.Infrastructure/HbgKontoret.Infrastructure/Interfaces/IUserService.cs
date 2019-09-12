@@ -7,10 +7,10 @@ namespace HbgKontoret.Infrastructure.Interfaces
 {
   public interface IUserService
   {
-    Task<UserDto> AddUserAsync(string firstName, string lastName, string email);
+    Task<UserDto> AddUserAsync(string username, string password);
     Task<bool> DeleteUserAsync(Guid userId);
     Task<IEnumerable<UserDto>> GetAllUsersAsync();
-    Task<UserDto> GetUserByIdAsync(Guid userId);
-    Task<UserDto> EditUserAsync(Guid userId, string firstName, string lastName, string email);
+    //Task<UserDto> GetUserByIdAsync(Guid userId);
+    string Authenticate(string username, string password);
   }
 }
