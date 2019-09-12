@@ -1,25 +1,21 @@
-﻿using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using HbgKontoret.Data.Helpers;
-using HbgKontoret.Infrastructure;
 using HbgKontoret.Data.Data;
 using HbgKontoret.Data.Data.Mapping;
 using HbgKontoret.Data.Data.Repositories;
-using HbgKontoret.Data.Entities;
 using HbgKontoret.Data.Services;
 using HbgKontoret.Infrastructure.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace HbgKontoret
 {
-  public class Startup
+    public class Startup
   {
     public Startup(IConfiguration configuration)
     {
@@ -38,6 +34,14 @@ namespace HbgKontoret
 
       services.AddCors();
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "HbgKontoret"
+                });
+            });
 
       services.AddScoped<LoginRepository>();
       services.AddScoped<IUserRepository, UserRepository>();
@@ -101,6 +105,11 @@ namespace HbgKontoret
           name: "default",
           template: "{controller}/{action}/{id?}");
       });
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "HbgKontoret");
+            });
     }
   }
 }
