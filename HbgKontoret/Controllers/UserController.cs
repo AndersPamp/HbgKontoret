@@ -48,7 +48,7 @@ namespace HbgKontoret.Controllers
 
     [AllowAnonymous]
     [HttpPost("authenticate")]
-    public IActionResult Athenticate([FromBody] UserDto userParam)
+    public IActionResult Authenticate([FromBody] UserDto userParam)
     {
       var userDto = _userService.Authenticate(userParam.Email, userParam.Password);
 
