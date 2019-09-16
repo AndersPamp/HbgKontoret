@@ -63,7 +63,7 @@ namespace HbgKontoret.Controllers
     }
 
     // POST: api/Office
-    [HttpPost]
+    [HttpPost("register")]
     public async Task<ActionResult<JsonResponse>> AddOfficeAsync([FromBody] OfficeDto officeDto)
     {
       if (ModelState.IsValid)

@@ -1,21 +1,25 @@
-﻿using AutoMapper;
+﻿using System.Text;
+using AutoMapper;
 using HbgKontoret.Data.Helpers;
 using HbgKontoret.Data.Data;
 using HbgKontoret.Data.Data.Mapping;
 using HbgKontoret.Data.Data.Repositories;
 using HbgKontoret.Data.Services;
 using HbgKontoret.Infrastructure.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace HbgKontoret
 {
-    public class Startup
+  public class Startup
   {
     public Startup(IConfiguration configuration)
     {
@@ -34,28 +38,37 @@ namespace HbgKontoret
       services.AddAutoMapper(typeof(DtoToEntityProfile));
 
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info
-                {
-                    Version = "v1",
-                    Title = "HbgKontoret"
-                });
-            });
 
+      #region AddScoped
       services.AddScoped<IUserRepository, UserRepository>();
       services.AddScoped<IProfileRepository, ProfileRepository>();
       services.AddScoped<IUserService, UserService>();
       services.AddScoped<IProfileService, ProfileService>();
       services.AddScoped<IOfficeRepository, OfficeRepository>();
       services.AddScoped<ICompetenceRepository, CompetenceRepository>();
+      //services.AddScoped<IDataSerializer, TicketSerializer>();
+      #endregion
 
       var appSettingsSection = Configuration.GetSection("AppSettings");
+
       services.Configure<AppSettings>(appSettingsSection);
 
       var appSettings = appSettingsSection.Get<AppSettings>();
-      #region Authentication
       var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+      services.AddMvc(opt => opt.Filters.Add(new RequireHttpsAttribute()));
+
+      #region CookieTryOut
+
+      services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+      {
+
+      });
+
+      #endregion
+
+      #region JwtOnly
+
       services.AddAuthentication(x =>
       {
         x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -71,10 +84,18 @@ namespace HbgKontoret
           ValidateIssuer = false,
           ValidateAudience = false
         };
-      })
-      #endregion
-      ;
+      });
 
+      #endregion
+
+      services.AddSwaggerGen(c =>
+      {
+        c.SwaggerDoc("v1", new Info
+        {
+          Version = "v1",
+          Title = "HbgKontoret"
+        });
+      });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,8 +111,10 @@ namespace HbgKontoret
         app.UseHsts();
       }
 
-      app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+      var cookiePolicyOptions = new CookiePolicyOptions();
 
+      app.UseCookiePolicy(cookiePolicyOptions);
+      app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
       app.UseAuthentication();
       app.UseHttpsRedirection();
       app.UseStaticFiles();
@@ -102,11 +125,12 @@ namespace HbgKontoret
           name: "default",
           template: "{controller?}/{action?}/{id?}");
       });
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "HbgKontoret");
-            });
+      app.UseSwagger();
+      app.UseSwaggerUI(c =>
+      {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "HbgKontoret");
+        //c.RoutePrefix = string.Empty;
+      });
     }
   }
 }
