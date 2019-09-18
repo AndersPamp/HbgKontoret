@@ -21,55 +21,81 @@ namespace HbgKontoret.Data.Data.Repositories
     }
     public async Task<IEnumerable<CompetenceDto>> GetAllCompetencesAsync()
     {
-      var competences = await _appDbContext.Competences.ToListAsync();
-      if (competences != null)
+      try
       {
-        var competenceDtos = _mapper.Map<IEnumerable<Competence>, IEnumerable<CompetenceDto>>(competences);
-        return competenceDtos;
+        var competences = await _appDbContext.Competences.ToListAsync();
+        if (competences != null)
+        {
+          var competenceDtos = _mapper.Map<IEnumerable<Competence>, IEnumerable<CompetenceDto>>(competences);
+          return competenceDtos;
+        }
       }
-
+      catch (Exception e)
+      {
+        throw new Exception(e.Message);
+      }
       return null;
     }
 
     public async Task<CompetenceDto> GetCompetenceByIdAsync(int id)
     {
-      var competence = await _appDbContext.Competences.FirstOrDefaultAsync(ct => ct.Id == id);
-      if (competence != null)
+      try
       {
-        var competenceDto = _mapper.Map<Competence, CompetenceDto>(competence);
-        return competenceDto;
+        var competence = await _appDbContext.Competences.FirstOrDefaultAsync(ct => ct.Id == id);
+        if (competence != null)
+        {
+          var competenceDto = _mapper.Map<Competence, CompetenceDto>(competence);
+          return competenceDto;
+        }
       }
-
+      catch (Exception e)
+      {
+        throw new Exception(e.Message);
+      }
       return null;
     }
 
     public async Task<CompetenceDto> AddCompetenceAsync(CompetenceDto competenceDto)
     {
-      var competence = _mapper.Map<CompetenceDto, Competence>(competenceDto);
+      try
+      {
+        var competence = _mapper.Map<CompetenceDto, Competence>(competenceDto);
 
-      await _appDbContext.Competences.AddAsync(competence);
-      await _appDbContext.SaveChangesAsync();
+        await _appDbContext.Competences.AddAsync(competence);
+        await _appDbContext.SaveChangesAsync();
 
-      var newCompetenceDto =
-        _mapper.Map<Competence, CompetenceDto>(
-          await _appDbContext.Competences.FirstOrDefaultAsync(ct => ct.Id == competence.Id));
+        var newCompetenceDto =
+          _mapper.Map<Competence, CompetenceDto>(
+            await _appDbContext.Competences.FirstOrDefaultAsync(ct => ct.Id == competence.Id));
 
-      return newCompetenceDto;
+        return newCompetenceDto;
 
+      }
+      catch (Exception e)
+      {
+        throw new Exception(e.Message);
+      }
     }
 
     public async Task<CompetenceDto> EditCompetenceAsync(int id, CompetenceDto competenceDto)
     {
-      var competenceForEdit = await _appDbContext.Competences.FirstOrDefaultAsync(ct => ct.Id == id);
-      if (competenceForEdit != null)
+      try
       {
-        competenceForEdit.Name = competenceDto.Name;
-        _appDbContext.Competences.Update(competenceForEdit);
+        var competenceForEdit = await _appDbContext.Competences.FirstOrDefaultAsync(ct => ct.Id == id);
+        if (competenceForEdit != null)
+        {
+          competenceForEdit.Name = competenceDto.Name;
+          _appDbContext.Competences.Update(competenceForEdit);
 
-        await _appDbContext.SaveChangesAsync();
-        var newCompetence = _mapper.Map<Competence, CompetenceDto>(competenceForEdit);
+          await _appDbContext.SaveChangesAsync();
+          var newCompetence = _mapper.Map<Competence, CompetenceDto>(competenceForEdit);
 
-        return newCompetence;
+          return newCompetence;
+        }
+      }
+      catch (Exception e)
+      {
+        throw new Exception(e.Message);
       }
 
       return null;
@@ -77,14 +103,20 @@ namespace HbgKontoret.Data.Data.Repositories
 
     public async Task<bool> DeleteCompetenceAsync(int id)
     {
-      var competence = await _appDbContext.Competences.FirstOrDefaultAsync(ct => ct.Id == id);
-      if (competence!=null)
+      try
       {
-        _appDbContext.Competences.Remove(competence);
-        await _appDbContext.SaveChangesAsync();
-        return true;
+        var competence = await _appDbContext.Competences.FirstOrDefaultAsync(ct => ct.Id == id);
+        if (competence != null)
+        {
+          _appDbContext.Competences.Remove(competence);
+          await _appDbContext.SaveChangesAsync();
+          return true;
+        }
       }
-
+      catch (Exception e)
+      {
+        throw new Exception(e.Message);
+      }
       return false;
     }
   }

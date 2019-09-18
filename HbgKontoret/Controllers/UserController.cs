@@ -29,13 +29,24 @@ namespace HbgKontoret.Controllers
     }
 
     #region obsolete
-    //// GET: api/User/5
-    //[HttpGet("{id}")]
-    //public async Task<ActionResult<User>> GetUserById(Guid id)
-    //{
-
-    //  return Ok(await _userService.GetUserByIdAsync(id));
-    //} 
+    // GET: api/User/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<User>> GetUserById(Guid id)
+    {
+      try
+      {
+        return Ok(await _userService.GetUserByIdAsync(id));
+      }
+      catch (Exception e)
+      {
+        return NotFound(new JsonResponse
+        {
+          Error = true,
+          Message = e.Message.ToString()
+        });
+      }
+      
+    }
     #endregion
 
     //POST: api/user/authenticate
@@ -107,14 +118,19 @@ namespace HbgKontoret.Controllers
     
     public async Task<ActionResult> Delete(Guid id)
     {
-      var result = await _userService.DeleteUserAsync(id);
-
-      if (result)
+      try
       {
+        var result = await _userService.DeleteUserAsync(id);
         return NoContent();
       }
-
-      return BadRequest("Something went wrong");
+      catch (Exception e)
+      {
+        return BadRequest(new JsonResponse
+        {
+          Error = true,
+          Message = e.Message.ToString()
+        });
+      }
     }
   }
 }

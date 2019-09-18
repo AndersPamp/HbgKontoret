@@ -12,6 +12,7 @@ namespace HbgKontoret.Infrastructure.Interfaces
     Task<UserDto> AddUserAsync(string username, string password);
     Task<bool> DeleteUserAsync(Guid userId);
     Task<IEnumerable<UserDto>> GetAllUsersAsync();
+    Task<UserDto> GetUserByIdAsync(Guid id);
     string Authenticate(string username, string password);
   }
 }

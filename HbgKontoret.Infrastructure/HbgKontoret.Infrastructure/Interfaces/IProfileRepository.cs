@@ -10,7 +10,7 @@ namespace HbgKontoret.Infrastructure.Interfaces
     Task<IEnumerable<ProfileDto>> GetAllProfilesAsync();
     Task<ProfileDto> GetProfileByIdAsync(Guid id);
     Task<ProfileDto> AddProfileAsync(ProfileDto profileDto);
-    Task<ProfileDto> UpdateUserByIdAsync(Guid id, ProfileDto profileDto);
+    Task<ProfileDto> UpdateProfileByIdAsync(Guid id, ProfileDto profileDto);
     Task<bool> DeleteProfileByIdAsync(Guid id);
     Task<ProfileCompetenceDto> AddProfileCompetenceAsync(ProfileCompetenceDto profileCompetenceDto);
     Task<bool> DeleteProfileCompetenceAsync(ProfileCompetenceDto profileCompetenceDto);
