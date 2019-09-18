@@ -24,152 +24,221 @@ namespace HbgKontoret.Data.Data.Repositories
 
     public async Task<IEnumerable<ProfileDto>> GetAllProfilesAsync()
     {
-      var profiles = await _appDbContext.Profiles.ToListAsync();
-      if (profiles != null)
+      try
       {
-
+        var profiles = await _appDbContext.Profiles.ToListAsync();
+        if (profiles == null || profiles.Count == 0)
+        {
+          return null;
+        }
         var profileDtos = _mapper.Map<IEnumerable<Profile>, IEnumerable<ProfileDto>>(profiles);
         return profileDtos;
       }
-      return null;
+      catch (Exception e)
+      {
+        throw new Exception(e.Message);
+      }
     }
 
     public async Task<ProfileDto> GetProfileByIdAsync(Guid id)
     {
-      var profile = await _appDbContext.Profiles.Include(x => x.ProfileOffices).ThenInclude(x=>x.Office).
-        Include(x => x.ProfileCompetences).
-        ThenInclude(x => x.Competence).FirstOrDefaultAsync(x => x.Id == id);
-
-      #region lambda alternative
-      //var queryResult = 
-      //  from ct in profile.ProfileCompetences
-      //  where ct.ProfileId == profile.Id
-      //  select new Competence()
-      //  {
-      //    Id = ct.Competence.Id,
-      //    Name = ct.Competence.Name
-      //  };
-
-      #endregion
-
-      var profileDto = new ProfileDto
+      try
       {
-        Id = profile.Id,
-        Manager = profile.Manager,
-        ImageUrl = profile.ImageUrl,
-        LinkedInUrl = profile.LinkedInUrl,
-        PhoneNo = profile.PhoneNo,
-        AboutMe = profile.AboutMe,
-        CompetenceDtos = profile.ProfileCompetences.Where(ct => ct.ProfileId == profile.Id).Select(ct => new CompetenceDto
+        var profile = await _appDbContext.Profiles.Include(x => x.ProfileOffices).ThenInclude(x => x.Office)
+          .Include(x => x.ProfileCompetences).ThenInclude(x => x.Competence).FirstOrDefaultAsync(x => x.Id == id);
+        if (profile == null)
         {
-          Id = ct.Competence.Id,
-          Name = ct.Competence.Name
-        }).ToList(),
-        OfficeDtos = profile.ProfileOffices.Where(of => of.ProfileId == profile.Id).Select(of => new OfficeDto
+          return null;
+        }
+
+        var profileDto = new ProfileDto
         {
-          Id = of.Office.Id,
-          Name = of.Office.Name,
-          Address = of.Office.Address,
-          Manager = of.Office.Manager,
-          Phone = of.Office.Phone
-        }).ToList()
-      };
-      return profileDto;
+          Id = profile.Id,
+          Manager = profile.Manager,
+          ImageUrl = profile.ImageUrl,
+          LinkedInUrl = profile.LinkedInUrl,
+          PhoneNo = profile.PhoneNo,
+          AboutMe = profile.AboutMe,
+          CompetenceDtos = profile.ProfileCompetences.Where(ct => ct.ProfileId == profile.Id).Select(ct =>
+            new CompetenceDto
+            {
+              Id = ct.Competence.Id,
+              Name = ct.Competence.Name
+            }).ToList(),
+          OfficeDtos = profile.ProfileOffices.Where(of => of.ProfileId == profile.Id).Select(of => new OfficeDto
+          {
+            Id = of.Office.Id,
+            Name = of.Office.Name,
+            Address = of.Office.Address,
+            Manager = of.Office.Manager,
+            Phone = of.Office.Phone
+          }).ToList()
+        };
+        return profileDto;
+
+      }
+      catch (Exception e)
+      {
+        throw new Exception(e.Message);
+      }
     }
+
+    #region lambda alternative
+    //var queryResult = 
+    //  from ct in profile.ProfileCompetences
+    //  where ct.ProfileId == profile.Id
+    //  select new Competence()
+    //  {
+    //    Id = ct.Competence.Id,
+    //    Name = ct.Competence.Name
+    //  };
+
+    #endregion
 
     public async Task<ProfileDto> AddProfileAsync(ProfileDto profileDto)
     {
-      var newProfile = new Profile()
+      try
       {
-        Manager = profileDto.Manager,
-        ImageUrl = profileDto.ImageUrl,
-        LinkedInUrl = profileDto.LinkedInUrl,
-        PhoneNo = profileDto.PhoneNo,
-        AboutMe = profileDto.AboutMe
-      };
-      await _appDbContext.Profiles.AddAsync(newProfile);
-      await _appDbContext.SaveChangesAsync();
-      return _mapper.Map<Profile, ProfileDto>(newProfile);
+        var newProfile = new Profile()
+        {
+          Manager = profileDto.Manager,
+          ImageUrl = profileDto.ImageUrl,
+          LinkedInUrl = profileDto.LinkedInUrl,
+          PhoneNo = profileDto.PhoneNo,
+          AboutMe = profileDto.AboutMe
+        };
+        await _appDbContext.Profiles.AddAsync(newProfile);
+        await _appDbContext.SaveChangesAsync();
+        return _mapper.Map<Profile, ProfileDto>(newProfile);
+      }
+      catch (Exception e)
+      {
+        throw new Exception(e.Message);
+      }
     }
 
-    public async Task<ProfileDto> UpdateUserByIdAsync(Guid id, ProfileDto profileDto)
+    public async Task<ProfileDto> UpdateProfileByIdAsync(Guid id, ProfileDto profileDto)
     {
-      var profileForEdit = await _appDbContext.Profiles.FirstOrDefaultAsync(x => x.Id == id);
-      profileForEdit.Manager = profileDto.Manager;
-      profileForEdit.ImageUrl = profileDto.ImageUrl;
-      profileForEdit.LinkedInUrl = profileDto.LinkedInUrl;
-      profileForEdit.PhoneNo = profileDto.PhoneNo;
-      profileForEdit.AboutMe = profileDto.AboutMe;
+      try
+      {
+        var profileForEdit = await _appDbContext.Profiles.FirstOrDefaultAsync(x => x.Id == id);
+        if (profileForEdit==null)
+        {
+          return null;
+        }
+        profileForEdit.Manager = profileDto.Manager;
+        profileForEdit.ImageUrl = profileDto.ImageUrl;
+        profileForEdit.LinkedInUrl = profileDto.LinkedInUrl;
+        profileForEdit.PhoneNo = profileDto.PhoneNo;
+        profileForEdit.AboutMe = profileDto.AboutMe;
 
-      await _appDbContext.SaveChangesAsync();
+        await _appDbContext.SaveChangesAsync();
 
-      return _mapper.Map<Profile, ProfileDto>(profileForEdit);
+        return _mapper.Map<Profile, ProfileDto>(profileForEdit);
+      }
+      catch (Exception e)
+      {
+        throw new Exception(e.Message);
+      }
     }
 
     public async Task<bool> DeleteProfileByIdAsync(Guid id)
     {
-      var profile = await _appDbContext.Profiles.FirstOrDefaultAsync(x => x.Id == id);
-      if (profile != null)
+      try
       {
-        _appDbContext.Profiles.Remove(profile);
-        await _appDbContext.SaveChangesAsync();
+        var profile = await _appDbContext.Profiles.FirstOrDefaultAsync(x => x.Id == id);
+        if (profile != null)
+        {
+          _appDbContext.Profiles.Remove(profile);
+          await _appDbContext.SaveChangesAsync();
 
-        return true;
+          return true;
+        }
       }
-
+      catch (Exception e)
+      {
+        throw new Exception(e.Message);
+      }
       return false;
     }
 
     public async Task<ProfileCompetenceDto> AddProfileCompetenceAsync(ProfileCompetenceDto profileCompetenceDto)
     {
-      var newProfileCompetence=new ProfileCompetence
+      try
       {
-        ProfileId = profileCompetenceDto.ProfileId,
-        CompetenceId = profileCompetenceDto.CompetenceId
-      };
-      await _appDbContext.ProfileCompetences.AddAsync(newProfileCompetence);
-      await _appDbContext.SaveChangesAsync();
+        var newProfileCompetence = new ProfileCompetence
+        {
+          ProfileId = profileCompetenceDto.ProfileId,
+          CompetenceId = profileCompetenceDto.CompetenceId
+        };
+        await _appDbContext.ProfileCompetences.AddAsync(newProfileCompetence);
+        await _appDbContext.SaveChangesAsync();
 
-      return _mapper.Map<ProfileCompetence, ProfileCompetenceDto>(newProfileCompetence);
+        return _mapper.Map<ProfileCompetence, ProfileCompetenceDto>(newProfileCompetence);
+      }
+      catch (Exception e)
+      {
+        throw new Exception(e.Message);
+      }
     }
 
     public async Task<bool> DeleteProfileCompetenceAsync(ProfileCompetenceDto profileCompetenceDto)
     {
-      var pcForDeletion = await _appDbContext.ProfileCompetences.Where(pid => pid.ProfileId == profileCompetenceDto.ProfileId)
-        .FirstOrDefaultAsync(cid => cid.CompetenceId == profileCompetenceDto.CompetenceId);
-      if (pcForDeletion!=null)
+      try
       {
-        _appDbContext.ProfileCompetences.Remove(pcForDeletion);
-        await _appDbContext.SaveChangesAsync();
-        return true;
-      }
+        var pcForDeletion = await _appDbContext.ProfileCompetences.Where(pid => pid.ProfileId == profileCompetenceDto.ProfileId)
+          .FirstOrDefaultAsync(cid => cid.CompetenceId == profileCompetenceDto.CompetenceId);
 
+        if (pcForDeletion != null)
+        {
+          _appDbContext.ProfileCompetences.Remove(pcForDeletion);
+          await _appDbContext.SaveChangesAsync();
+          return true;
+        }
+      }
+      catch (Exception e)
+      {
+        throw new Exception(e.Message);
+      }
       return false;
     }
 
     public async Task<ProfileOfficeDto> AddProfileOfficeAsync(ProfileOfficeDto profileOfficeDto)
     {
-      var newProfileOffice=new ProfileOffice
+      try
       {
-        ProfileId = profileOfficeDto.ProfileId,
-        OfficeId = profileOfficeDto.OfficeId
-      };
-      await _appDbContext.ProfileOffices.AddAsync(newProfileOffice);
-      await _appDbContext.SaveChangesAsync();
-      return _mapper.Map<ProfileOffice, ProfileOfficeDto>(newProfileOffice);
+        var newProfileOffice = new ProfileOffice
+        {
+          ProfileId = profileOfficeDto.ProfileId,
+          OfficeId = profileOfficeDto.OfficeId
+        };
+        await _appDbContext.ProfileOffices.AddAsync(newProfileOffice);
+        await _appDbContext.SaveChangesAsync();
+        return _mapper.Map<ProfileOffice, ProfileOfficeDto>(newProfileOffice);
+      }
+      catch (Exception e)
+      {
+        throw new Exception(e.Message);
+      }
     }
 
     public async Task<bool> DeleteProfileOfficeAsync(ProfileOfficeDto profileOfficeDto)
     {
-      var poForDeletion = await _appDbContext.ProfileOffices.Where(pid => pid.ProfileId == profileOfficeDto.ProfileId)
-        .FirstOrDefaultAsync(oid => oid.OfficeId == profileOfficeDto.OfficeId);
-
-      if (poForDeletion!=null)
+      try
       {
-        _appDbContext.ProfileOffices.Remove(poForDeletion);
-        return true;
-      }
+        var poForDeletion = await _appDbContext.ProfileOffices.Where(pid => pid.ProfileId == profileOfficeDto.ProfileId)
+          .FirstOrDefaultAsync(oid => oid.OfficeId == profileOfficeDto.OfficeId);
 
+        if (poForDeletion != null)
+        {
+          _appDbContext.ProfileOffices.Remove(poForDeletion);
+          return true;
+        }
+      }
+      catch (Exception e)
+      {
+        throw new Exception(e.Message);
+      }
       return false;
     }
 

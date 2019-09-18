@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using HbgKontoret.Data.Entities.Links;
 
 namespace HbgKontoret.Data.Entities
 {
@@ -11,6 +13,6 @@ namespace HbgKontoret.Data.Entities
     [Required]
     public string Password { get; set; }
     public Guid? ProfileId { get; set; } = Guid.Empty;
-    public int? RoleId { get; set; } = 1;
+    public Role Role { get; set; }
   }
 }

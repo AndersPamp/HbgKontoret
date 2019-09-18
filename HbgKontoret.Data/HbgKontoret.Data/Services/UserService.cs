@@ -26,14 +26,35 @@ namespace HbgKontoret.Data.Services
 
     public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
     {
-      var userDtos = await _userRepository.GetAllUsersAsync();
-
-      //Remove pwd before sending out
-      return userDtos.Select(x =>
+      try
       {
-        x.Password = null;
-        return x;
-      });
+        var userDtos = await _userRepository.GetAllUsersAsync();
+
+        //Remove pwd before sending out
+        return userDtos.Select(x =>
+        {
+          x.Password = null;
+          return x;
+        });
+      }
+      catch (Exception e)
+      {
+        throw new Exception(e.Message.ToString());
+      }
+    }
+
+    public async Task<UserDto> GetUserByIdAsync(Guid id)
+    {
+      try
+      {
+        var userDto = await _userRepository.GetUserByIdAsync(id);
+        userDto.Password = null;
+        return userDto;
+      }
+      catch (Exception e)
+      {
+        throw new Exception(e.Message.ToString());
+      }
     }
 
 
@@ -89,16 +110,23 @@ namespace HbgKontoret.Data.Services
 
     public async Task<UserDto> AddUserAsync(string username, string password)
     {
-      var newUserDto = new UserDto
+      try
       {
-        Email = username,
-        Password = password
-      };
-      var result = await _userRepository.AddUserAsync(newUserDto);
-      if (result!=null)
+        var newUserDto = new UserDto
+        {
+          Email = username,
+          Password = password
+        };
+        var result = await _userRepository.AddUserAsync(newUserDto);
+        if (result != null)
+        {
+          result.Password = null;
+          return result;
+        }
+      }
+      catch (Exception e)
       {
-        result.Password = null;
-        return result;
+        throw new Exception(e.Message.ToString());
       }
 
       return null;

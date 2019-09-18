@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HbgKontoret.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190916080701_added seeding data in DbContext")]
-    partial class addedseedingdatainDbContext
+    [Migration("20190917132448_changed role property in user 02")]
+    partial class changedrolepropertyinuser02
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -284,6 +284,8 @@ namespace HbgKontoret.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RoleId");
+
                     b.ToTable("Users");
 
                     b.HasData(
@@ -292,7 +294,6 @@ namespace HbgKontoret.Data.Migrations
                             Id = new Guid("53019d21-e997-406d-bc36-6627c078e6a5"),
                             Email = "admin@consid.se",
                             Password = "secret123!",
-                            ProfileId = new Guid("00000000-0000-0000-0000-000000000000"),
                             RoleId = 4
                         },
                         new
@@ -300,23 +301,20 @@ namespace HbgKontoret.Data.Migrations
                             Id = new Guid("97de5fdb-e995-4289-a753-39657ee08a11"),
                             Email = "robin@consid.se",
                             Password = "consid01",
-                            ProfileId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            RoleId = 2
+                            RoleId = 3
                         },
                         new
                         {
                             Id = new Guid("84a23a45-1dc8-471d-b0ae-c11b3c2b014b"),
                             Email = "salmin@consid.se",
                             Password = "consid02",
-                            ProfileId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            RoleId = 3
+                            RoleId = 2
                         },
                         new
                         {
                             Id = new Guid("2d11321b-72a4-492e-a9cb-becb72164fa4"),
                             Email = "janedoe@nomail.com",
                             Password = "visitor01",
-                            ProfileId = new Guid("00000000-0000-0000-0000-000000000000"),
                             RoleId = 1
                         });
                 });
@@ -345,6 +343,13 @@ namespace HbgKontoret.Data.Migrations
                         .WithMany("ProfileOffices")
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("HbgKontoret.Data.Entities.User", b =>
+                {
+                    b.HasOne("HbgKontoret.Data.Entities.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId");
                 });
 #pragma warning restore 612, 618
         }

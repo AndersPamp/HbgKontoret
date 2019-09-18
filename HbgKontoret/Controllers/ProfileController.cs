@@ -108,8 +108,8 @@ namespace HbgKontoret.Controllers
     }
 
     //PATCH: api/ProfileDto/5
-    [HttpPatch("edit")]
-    public async Task<ActionResult<ProfileDto>> EditProfileDto(Guid id, [FromBody]JsonPatchDocument<ProfileDto> value)
+    [HttpPatch("edit/{id}")]
+    public async Task<ActionResult<ProfileDto>> PatchProfile(Guid id, [FromBody]JsonPatchDocument<ProfileDto> value)
     {
       if (value==null)
       {
@@ -122,13 +122,16 @@ namespace HbgKontoret.Controllers
 
       try
       {
-        var result = await _profileService.GetProfileByIdAsync(id);
+        var profile = await _profileService.GetProfileByIdAsync(id);
 
-        if (result != null)
+        if (profile != null)
         {
-          value.ApplyTo(result, ModelState);
+          value.ApplyTo(profile);
 
-          return Created("", result);
+          return Ok(new JsonResponse
+          {
+            Data = profile
+          });
         }
       }
       catch (Exception e)
