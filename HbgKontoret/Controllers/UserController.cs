@@ -22,7 +22,6 @@ namespace HbgKontoret.Controllers
       _userService = userService;
     }
     // GET: api/User
-    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<User>>> GetAll()
     {
@@ -39,22 +38,17 @@ namespace HbgKontoret.Controllers
     //} 
     #endregion
 
-    [HttpPost]
-    [Authorize]
-    public IActionResult IsAuthenticated()
-    {
-      return Ok("Authenticated");
-    }
-
+    //POST: api/user/authenticate
     [AllowAnonymous]
     [HttpPost("authenticate")]
+    //[ValidateAntiForgeryToken]
     public IActionResult Authenticate([FromBody] UserDto userParam)
     {
-      var userDto = _userService.Authenticate(userParam.Email, userParam.Password);
+      var token = _userService.Authenticate(userParam.Email, userParam.Password);
 
       //Set token in access_token cookie and also set a CSRF token
 
-      if (userDto==null)
+      if (token == null)
       {
         return BadRequest(new JsonResponse
         {
@@ -62,50 +56,55 @@ namespace HbgKontoret.Controllers
           Message = "Username and/or password is incorrect.  All makt åt Tengil, vår befriare!"
         });
       }
-
-      return Ok(new JsonResponse
-      {
-        Data = userDto
-      });
+      return Ok(token);
     }
 
-    // POST: api/User
-    [HttpPost]
-    public async Task<ActionResult<UserDto>> AddUser([FromBody]UserDto userDto)
-
+    //POST: api/user/register
+    [AllowAnonymous]
+    [HttpPost("register")]
+    public IActionResult Register([FromBody] UserDto userDto)
     {
       if (ModelState.IsValid)
       {
-        var newUserDto = await _userService.AddUserAsync(userDto.Email, userDto.Password);
-        return Created("", new JsonResponse
+        try
         {
-          Data = newUserDto
+          var result = _userService.AddUserAsync(userDto.Email, userDto.Password).Result;
+          if (result!=null)
+          {
+            return Created("", new JsonResponse
+            {
+              Data = result
+            });
+          }
+        }
+        catch (Exception e)
+        {
+          return BadRequest(new JsonResponse
+          {
+            Error = true,
+            Message = new Exception(e.Message).ToString()
+          });
+        }
+      }
+      else if (!ModelState.IsValid)
+      {
+        return BadRequest(new JsonResponse
+        {
+          Error = true,
+          Message = "Username and/or password was not supplied, numbnuts!"
         });
       }
 
       return BadRequest(new JsonResponse
       {
-        Error = true,
-        Message = "Not all required parameters were submitted"
+        Error = true
       });
     }
 
-    //// PUT: api/User/5
-    //[HttpPut("{id}")]
-    //public async Task<ActionResult<User>> EditUser(Guid id, [FromBody] User user)
-    //{
-    //  if (ModelState.IsValid)
-    //  {
-    //    var editedUser =
-    //    await _userService.EditUserAsync(id, user.FirstName, user.LastName, user.Email);
-    //    return Accepted(editedUser);
-    //  }
-
-    //  return BadRequest("Not all required parameters were submitted");
-    //}
 
     // DELETE: api/ApiWithActions/5
     [HttpDelete("{id}")]
+    
     public async Task<ActionResult> Delete(Guid id)
     {
       var result = await _userService.DeleteUserAsync(id);

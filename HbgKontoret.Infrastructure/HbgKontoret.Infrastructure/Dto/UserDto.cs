@@ -12,7 +12,6 @@ namespace HbgKontoret.Infrastructure.Dto
     [Required]
     public string Password { get; set; }
     public Guid ProfileDtoId { get; set; } = Guid.Empty;
-    public IEnumerable<int> RoleId { get; set; } =new List<int>();
-    //public string Token { get; set; }
+    public int? RoleId { get; set; } = 1;
   }
 }

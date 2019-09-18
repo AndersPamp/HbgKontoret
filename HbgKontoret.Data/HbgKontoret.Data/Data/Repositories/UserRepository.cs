@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using HbgKontoret.Data.Communication;
 using HbgKontoret.Data.Entities;
 using HbgKontoret.Infrastructure.Dto;
 using HbgKontoret.Infrastructure.Interfaces;
@@ -39,7 +40,7 @@ namespace HbgKontoret.Data.Data.Repositories
         {
           //userDto.ProfileDto = new ProfileDto
           //{
-            
+
           //};
 
           //var profileDto = new ProfileDto
@@ -76,11 +77,20 @@ namespace HbgKontoret.Data.Data.Repositories
     {
       var user = _mapper.Map<UserDto, User>(userDto);
 
-      await _appDbContext.Users.AddAsync(user);
-      await _appDbContext.SaveChangesAsync();
-      return _mapper.Map<User, UserDto>(user);
+      var checkIfExist = await _appDbContext.Users.FirstOrDefaultAsync(u => u.Email == userDto.Email);
 
+      if (checkIfExist == null)
+      {
+        var result = await _appDbContext.Users.AddAsync(user);
+        if (result != null)
+        {
+          await _appDbContext.SaveChangesAsync();
+          return _mapper.Map<User, UserDto>(user);
+        }
+      }
+      return null;
     }
+
     public async Task<UserDto> UpdateUserByIdAsync(Guid id, UserDto userDto)
     {
       var userForUpdate = await _appDbContext.Users.FirstOrDefaultAsync(x => x.Id == id);

@@ -36,56 +36,13 @@ namespace HbgKontoret.Data.Services
       });
     }
 
-    //public async Task<UserDto> GetUserByIdAsync(Guid userId)
-    //{
-    //  var userDto = await _userRepository.GetUserByIdAsync(userId);
-    //  if (userDto!=null)
-    //  {
-    //    userDto.Password = null;
-    //    return userDto;
-    //  }
-    //  return null;
-    //}
-
-    public async Task<UserDto> AddUserAsync(string username, string password)
-    {
-      var user = _userRepository.GetAllUsersAsync().Result.SingleOrDefault(x => x.Email == username);
-
-      if (user!=null)
-      {
-        var newUserDto = new UserDto()
-        {
-          Email = username,
-          Password = password
-        };
-        return await _userRepository.AddUserAsync(newUserDto);
-      }
-
-      return null;
-    }
-
-    //public async Task<UserDto> EditUserAsync(Guid userId, string firstName, string lastName, string email)
-    //{
-    //  var userForEdit = await _userRepository.GetUserByIdAsync(userId);
-    //  if (userForEdit != null)
-    //  {
-    //    //userForEdit.FirstName = firstName;
-    //    //userForEdit.LastName = lastName;
-    //    userForEdit.Email = email;
-
-    //    await _userRepository.UpdateUserByIdAsync(userId, userForEdit);
-
-    //  }
-
-    //  return null;
-    //}
 
     public string Authenticate(string username, string password)
     {
       var userDto = _userRepository.GetAllUsersAsync().Result
-        .SingleOrDefault(x => x.Email == username && x.Password == password);
+        .FirstOrDefault(x => x.Email == username && x.Password == password);
 
-      if (userDto!=null)
+      if (userDto == null)
       {
         return null;
       }
@@ -96,18 +53,55 @@ namespace HbgKontoret.Data.Services
       {
         Subject = new ClaimsIdentity(new Claim[]
         {
-          new Claim(ClaimTypes.Name, userDto.Id.ToString()), 
+          new Claim(ClaimTypes.Name, userDto.Id.ToString()),
         }),
         Expires = DateTime.UtcNow.AddHours(12),
         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
       };
 
-      var token = tokenHandler.CreateToken(tokenDescriptor);
-      //userDto.Token = tokenHandler.WriteToken(token);
+      var jwtToken = tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
+      var token = tokenHandler.WriteToken(jwtToken);
 
       userDto.Password = null;
 
-      return token.ToString();
+      return token;
+    }
+
+    //public Cookie Authenticate(string username, string password)
+    //{
+    //  var claims=new List<Claim>
+    //  {
+    //    new Claim(ClaimTypes.Name, username),
+    //    new Claim(ClaimTypes.Role, "Administrator")
+    //  };
+
+    //  var claimsIdentity=new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+    //  var authProperties = new AuthenticationProperties
+    //  {
+    //    AllowRefresh = true,
+    //    IssuedUtc = DateTimeOffset.UtcNow,
+    //    RedirectUri = "https://localhost:44398/api/user/authenticate"
+    //  };
+
+    //  return null;
+    //}
+
+    public async Task<UserDto> AddUserAsync(string username, string password)
+    {
+      var newUserDto = new UserDto
+      {
+        Email = username,
+        Password = password
+      };
+      var result = await _userRepository.AddUserAsync(newUserDto);
+      if (result!=null)
+      {
+        result.Password = null;
+        return result;
+      }
+
+      return null;
     }
 
     public async Task<bool> DeleteUserAsync(Guid userId)
@@ -116,7 +110,6 @@ namespace HbgKontoret.Data.Services
       {
         return true;
       }
-
       return false;
     }
   }

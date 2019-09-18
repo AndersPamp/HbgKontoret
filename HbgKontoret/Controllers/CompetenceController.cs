@@ -63,7 +63,7 @@ namespace HbgKontoret.Controllers
     }
 
     // POST: api/Competence
-    [HttpPost]
+    [HttpPost("register")]
     public async Task<ActionResult<JsonResponse>> AddCompetenceAsync([FromBody] CompetenceDto competenceDto)
     {
       if (ModelState.IsValid)

@@ -5,6 +5,7 @@ using HbgKontoret.Data.Communication;
 using HbgKontoret.Infrastructure.Dto;
 using HbgKontoret.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -65,7 +66,7 @@ namespace HbgKontoret.Controllers
     }
 
     // POST: api/ProfileDto
-    [HttpPost]
+    [HttpPost("register")]
     public async Task<ActionResult<JsonResponse>> AddProfileDto([FromBody] ProfileDto ProfileDto)
     {
       if (ModelState.IsValid)
@@ -93,6 +94,10 @@ namespace HbgKontoret.Controllers
       if (ModelState.IsValid)
       {
         var result = await _profileService.EditProfileAsync(id, profileDto);
+        return Created("", new JsonResponse
+        {
+          Data = result
+        });
       }
 
       return BadRequest(new JsonResponse
@@ -102,21 +107,41 @@ namespace HbgKontoret.Controllers
       });
     }
 
-    ////PATCH: api/ProfileDto/5
-    //[HttpPatch("{id}")]
-    //public async Task<ActionResult<ProfileDto>> EditProfileDto(Guid id, [FromBody]JsonPatchDocument<ProfileDto> value)
-    //{
-    //  var result = await _ProfileDtoService.GetProfileDtoByIdAsync(id);
-    //  if (result!=null)
-    //  {
-    //   value.ApplyTo(result, ModelState);
+    //PATCH: api/ProfileDto/5
+    [HttpPatch("edit")]
+    public async Task<ActionResult<ProfileDto>> EditProfileDto(Guid id, [FromBody]JsonPatchDocument<ProfileDto> value)
+    {
+      if (value==null)
+      {
+        return BadRequest(new JsonResponse
+        {
+          Error = true,
+          Message = "You haven't submitted any data to edit the profile with."
+        });
+      }
 
+      try
+      {
+        var result = await _profileService.GetProfileByIdAsync(id);
 
-    //    return Created("",result);
-    //  }
+        if (result != null)
+        {
+          value.ApplyTo(result, ModelState);
 
-    //  return BadRequest();
-    //}
+          return Created("", result);
+        }
+      }
+      catch (Exception e)
+      {
+        return BadRequest(new JsonResponse
+        {
+          Error = true,
+          Message = e.ToString()
+        });
+      }
+
+      return BadRequest();
+    }
 
     // DELETE: api/ApiWithActions/5
 
