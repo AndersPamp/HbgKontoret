@@ -55,7 +55,7 @@ namespace HbgKontoret.Data.Services
       profileForEdit.PhoneNo = profileDto.PhoneNo;
       profileForEdit.AboutMe = profileDto.AboutMe;
 
-      await _profileRepository.UpdateUserByIdAsync(profileId, profileForEdit);
+      await _profileRepository.UpdateProfileByIdAsync(profileId, profileForEdit);
       return profileForEdit;
     }
     public async Task<bool> DeleteProfileAsync(Guid profileId)
