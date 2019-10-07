@@ -139,6 +139,8 @@ namespace HbgKontoret.Data.Data
         new ProfileOffice{OfficeId = 1, ProfileId = Guid.Parse("2ED8C7CA-6061-4308-86CC-61D73119B431")},
         new ProfileOffice{OfficeId = 2, ProfileId = Guid.Parse("02A9EE1C-FA0D-4E61-82E3-78A592EFF671")}
       });
+
+      //Github suger röv!
     }
   }
 }
