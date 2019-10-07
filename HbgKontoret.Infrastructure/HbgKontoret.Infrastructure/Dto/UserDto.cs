@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace HbgKontoret.Infrastructure.Dto
@@ -8,6 +7,7 @@ namespace HbgKontoret.Infrastructure.Dto
   {
     public Guid Id { get; set; }
     [Required]
+    [EmailAddress]
     public string Email { get; set; }
     [Required]
     public string Password { get; set; }

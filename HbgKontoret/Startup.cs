@@ -1,12 +1,11 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
 using AutoMapper;
-using HbgKontoret.Data.Helpers;
 using HbgKontoret.Data.Data;
 using HbgKontoret.Data.Data.Mapping;
 using HbgKontoret.Data.Data.Repositories;
+using HbgKontoret.Data.Helpers;
 using HbgKontoret.Data.Services;
 using HbgKontoret.Infrastructure.Interfaces;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
+using System.Text;
 
 namespace HbgKontoret
 {
@@ -58,15 +58,6 @@ namespace HbgKontoret
 
       services.AddMvc(opt => opt.Filters.Add(new RequireHttpsAttribute()));
 
-      #region CookieTryOut
-
-      services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
-      {
-
-      });
-
-      #endregion
-
       #region JwtOnly
 
       services.AddAuthentication(x =>
@@ -88,14 +79,32 @@ namespace HbgKontoret
 
       #endregion
 
+      #region Swagger
       services.AddSwaggerGen(c =>
-      {
-        c.SwaggerDoc("v1", new Info
-        {
-          Version = "v1",
-          Title = "HbgKontoret"
-        });
-      });
+  {
+    c.SwaggerDoc("v1", new Info
+    {
+      Version = "v1",
+      Title = "HbgKontoret"
+    });
+
+
+    c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+    {
+      Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+      Name = "Authorization",
+      In = "header",
+      Type = "apiKey"
+    });
+
+    var security = new Dictionary<string, IEnumerable<string>>
+    {
+          {"Bearer", new string[] {  }},
+    };
+
+    c.AddSecurityRequirement(security);
+  }); 
+      #endregion
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

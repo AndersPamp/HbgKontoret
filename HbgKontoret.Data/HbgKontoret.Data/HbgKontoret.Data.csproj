@@ -18,8 +18,4 @@
     <ProjectReference Include="..\..\HbgKontoret.Infrastructure\HbgKontoret.Infrastructure\HbgKontoret.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Authentication\" />
-  </ItemGroup>
-
 </Project>

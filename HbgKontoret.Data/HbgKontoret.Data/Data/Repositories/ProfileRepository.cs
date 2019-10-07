@@ -54,6 +54,8 @@ namespace HbgKontoret.Data.Data.Repositories
         var profileDto = new ProfileDto
         {
           Id = profile.Id,
+          FirstName = profile.FirstName,
+          LastName = profile.LastName,
           Manager = profile.Manager,
           ImageUrl = profile.ImageUrl,
           LinkedInUrl = profile.LinkedInUrl,
@@ -101,6 +103,8 @@ namespace HbgKontoret.Data.Data.Repositories
       {
         var newProfile = new Profile()
         {
+          FirstName = profileDto.FirstName,
+          LastName = profileDto.LastName,
           Manager = profileDto.Manager,
           ImageUrl = profileDto.ImageUrl,
           LinkedInUrl = profileDto.LinkedInUrl,
@@ -126,6 +130,9 @@ namespace HbgKontoret.Data.Data.Repositories
         {
           return null;
         }
+
+        profileForEdit.FirstName = profileDto.FirstName;
+        profileForEdit.LastName = profileDto.LastName;
         profileForEdit.Manager = profileDto.Manager;
         profileForEdit.ImageUrl = profileDto.ImageUrl;
         profileForEdit.LinkedInUrl = profileDto.LinkedInUrl;

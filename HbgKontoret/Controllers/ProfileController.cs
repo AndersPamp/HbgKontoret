@@ -25,6 +25,7 @@ namespace HbgKontoret.Controllers
 
     // GET: api/ProfileDto
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<JsonResponse>> GetAllProfileDtos()
     {
       var profileDtos = await _profileService.GetAllProfileAsync();
@@ -46,6 +47,7 @@ namespace HbgKontoret.Controllers
 
     // GET: api/ProfileDto/5
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult<JsonResponse>> GetProfileDtoById(Guid id)
     {
       var profileDto = await _profileService.GetProfileByIdAsync(id);
@@ -71,7 +73,7 @@ namespace HbgKontoret.Controllers
     {
       if (ModelState.IsValid)
       {
-        var newProfileDto = await _profileService.AddProfileAsync(ProfileDto.Manager, ProfileDto.ImageUrl, ProfileDto.LinkedInUrl,
+        var newProfileDto = await _profileService.AddProfileAsync(ProfileDto.FirstName, ProfileDto.LastName, ProfileDto.Manager, ProfileDto.ImageUrl, ProfileDto.LinkedInUrl,
           ProfileDto.PhoneNo, ProfileDto.AboutMe);
 
         return Created("", new JsonResponse
@@ -111,7 +113,7 @@ namespace HbgKontoret.Controllers
     [HttpPatch("edit/{id}")]
     public async Task<ActionResult<ProfileDto>> PatchProfile(Guid id, [FromBody]JsonPatchDocument<ProfileDto> value)
     {
-      if (value==null)
+      if (value == null)
       {
         return BadRequest(new JsonResponse
         {

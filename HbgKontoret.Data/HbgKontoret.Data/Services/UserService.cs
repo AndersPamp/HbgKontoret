@@ -57,7 +57,6 @@ namespace HbgKontoret.Data.Services
       }
     }
 
-
     public string Authenticate(string username, string password)
     {
       var userDto = _userRepository.GetAllUsersAsync().Result
@@ -134,10 +133,18 @@ namespace HbgKontoret.Data.Services
 
     public async Task<bool> DeleteUserAsync(Guid userId)
     {
-      if (await _userRepository.DeleteUserByIdAsync(userId))
+      try
       {
-        return true;
+        if (await _userRepository.DeleteUserByIdAsync(userId))
+        {
+          return true;
+        }
       }
+      catch (Exception e)
+      {
+        throw new Exception(e.Message);
+      }
+      
       return false;
     }
   }

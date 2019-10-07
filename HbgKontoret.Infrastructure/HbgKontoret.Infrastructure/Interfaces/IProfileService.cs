@@ -9,7 +9,7 @@ namespace HbgKontoret.Infrastructure.Interfaces
   public interface IProfileService
   {
     
-    Task<ProfileDto> AddProfileAsync(string manager, string imageUrl, string linkedinUrl, string phoneNumber, string aboutMe);
+    Task<ProfileDto> AddProfileAsync(string firstName, string lastName, string manager, string imageUrl, string linkedinUrl, string phoneNumber, string aboutMe);
     Task<bool> DeleteProfileAsync(Guid profileId);
     Task<IEnumerable<ProfileDto>> GetAllProfileAsync();
     Task<ProfileDto> GetProfileByIdAsync(Guid profileId);
