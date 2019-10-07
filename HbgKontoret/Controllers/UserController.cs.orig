@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HbgKontoret.Controllers
 {
-  //[Authorize]
+  [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class UserController : ControllerBase
@@ -29,24 +29,13 @@ namespace HbgKontoret.Controllers
     }
 
     #region obsolete
-    // GET: api/User/5
-    [HttpGet("{id}")]
-    public async Task<ActionResult<User>> GetUserById(Guid id)
-    {
-      try
-      {
-        return Ok(await _userService.GetUserByIdAsync(id));
-      }
-      catch (Exception e)
-      {
-        return NotFound(new JsonResponse
-        {
-          Error = true,
-          Message = e.Message.ToString()
-        });
-      }
-      
-    }
+    //// GET: api/User/5
+    //[HttpGet("{id}")]
+    //public async Task<ActionResult<User>> GetUserById(Guid id)
+    //{
+
+    //  return Ok(await _userService.GetUserByIdAsync(id));
+    //} 
     #endregion
 
     //POST: api/user/authenticate
@@ -118,19 +107,14 @@ namespace HbgKontoret.Controllers
     
     public async Task<ActionResult> Delete(Guid id)
     {
-      try
+      var result = await _userService.DeleteUserAsync(id);
+
+      if (result)
       {
-        var result = await _userService.DeleteUserAsync(id);
         return NoContent();
       }
-      catch (Exception e)
-      {
-        return BadRequest(new JsonResponse
-        {
-          Error = true,
-          Message = e.Message.ToString()
-        });
-      }
+
+      return BadRequest("Something went wrong");
     }
   }
 }

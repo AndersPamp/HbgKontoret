@@ -19,7 +19,7 @@ using System.Text;
 
 namespace HbgKontoret
 {
-  public class Startup
+    public class Startup
   {
     public Startup(IConfiguration configuration)
     {
