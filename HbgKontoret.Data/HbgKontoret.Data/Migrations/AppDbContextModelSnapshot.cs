@@ -227,6 +227,14 @@ namespace HbgKontoret.Data.Migrations
                             FirstName = "Salmin",
                             LastName = "Salminovic",
                             Manager = "Peter"
+                        },
+                        new
+                        {
+                            Id = new Guid("53019d21-e997-406d-bc36-6627c078e6a5"),
+                            AboutMe = "I'm awesome and you suck!",
+                            FirstName = "Admin",
+                            LastName = "Administrator",
+                            Manager = "Mange"
                         });
                 });
 
@@ -278,9 +286,11 @@ namespace HbgKontoret.Data.Migrations
 
                     b.Property<Guid?>("ProfileId");
 
-                    b.Property<int?>("RoleId");
+                    b.Property<int>("RoleId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProfileId");
 
                     b.HasIndex("RoleId");
 
@@ -292,6 +302,7 @@ namespace HbgKontoret.Data.Migrations
                             Id = new Guid("53019d21-e997-406d-bc36-6627c078e6a5"),
                             Email = "admin@consid.se",
                             Password = "secret123!",
+                            ProfileId = new Guid("c3178cd5-3615-4ebe-97f6-88da54a2ce21"),
                             RoleId = 4
                         },
                         new
@@ -299,6 +310,7 @@ namespace HbgKontoret.Data.Migrations
                             Id = new Guid("97de5fdb-e995-4289-a753-39657ee08a11"),
                             Email = "robin@consid.se",
                             Password = "consid01",
+                            ProfileId = new Guid("2ed8c7ca-6061-4308-86cc-61d73119b431"),
                             RoleId = 3
                         },
                         new
@@ -306,6 +318,7 @@ namespace HbgKontoret.Data.Migrations
                             Id = new Guid("84a23a45-1dc8-471d-b0ae-c11b3c2b014b"),
                             Email = "salmin@consid.se",
                             Password = "consid02",
+                            ProfileId = new Guid("02a9ee1c-fa0d-4e61-82e3-78a592eff671"),
                             RoleId = 2
                         },
                         new
@@ -345,9 +358,14 @@ namespace HbgKontoret.Data.Migrations
 
             modelBuilder.Entity("HbgKontoret.Data.Entities.User", b =>
                 {
+                    b.HasOne("HbgKontoret.Data.Entities.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId");
+
                     b.HasOne("HbgKontoret.Data.Entities.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

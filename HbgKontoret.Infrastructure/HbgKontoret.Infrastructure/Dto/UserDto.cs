@@ -11,7 +11,9 @@ namespace HbgKontoret.Infrastructure.Dto
     public string Email { get; set; }
     [Required]
     public string Password { get; set; }
-    public Guid? ProfileId { get; set; } = Guid.Empty;
+    public Guid? ProfileDtoId { get; set; }
+    public ProfileDto ProfileDto { get; set; }
+    public int RoleDtoId { get; set; }
     public RoleDto RoleDto { get; set; }
   }
 }

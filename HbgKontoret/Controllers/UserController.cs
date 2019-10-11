@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HbgKontoret.Controllers
 {
-  //[Authorize]
+  [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class UserController : ControllerBase
@@ -23,19 +23,23 @@ namespace HbgKontoret.Controllers
     }
     // GET: api/User
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<User>>> GetAll()
     {
+      //var userId = User.Identity.Name;
+
+
       return Ok(await _userService.GetAllUsersAsync());
     }
 
-    #region obsolete
     // GET: api/User/5
-    [HttpGet("{id}")]
-    public async Task<ActionResult<User>> GetUserById(Guid id)
+    [HttpGet("user")]
+    public async Task<ActionResult<User>> GetUserById()
     {
+      var userId = User.Identity.Name;
       try
       {
-        return Ok(await _userService.GetUserByIdAsync(id));
+        return Ok(await _userService.GetUserByIdAsync(Guid.Parse(userId)));
       }
       catch (Exception e)
       {
@@ -45,9 +49,8 @@ namespace HbgKontoret.Controllers
           Message = e.Message.ToString()
         });
       }
-      
     }
-    #endregion
+
 
     //POST: api/user/authenticate
     [AllowAnonymous]
@@ -67,6 +70,7 @@ namespace HbgKontoret.Controllers
           Message = "Username and/or password is incorrect.  All makt åt Tengil, vår befriare!"
         });
       }
+
       return Ok(token);
     }
 
@@ -80,7 +84,7 @@ namespace HbgKontoret.Controllers
         try
         {
           var result = _userService.AddUserAsync(userDto.Email, userDto.Password).Result;
-          if (result!=null)
+          if (result != null)
           {
             return Created("", new JsonResponse
             {
@@ -115,7 +119,6 @@ namespace HbgKontoret.Controllers
 
     // DELETE: api/ApiWithActions/5
     [HttpDelete("{id}")]
-    
     public async Task<ActionResult> Delete(Guid id)
     {
       try

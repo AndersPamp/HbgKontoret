@@ -23,7 +23,7 @@ namespace HbgKontoret.Data.Data.Repositories
     {
       try
       {
-        var users = await _appDbContext.Users.Include(x => x.Role).ToListAsync();
+        var users = await _appDbContext.Users.Include(x=>x.Role).ToListAsync();
 
         if (users==null || users.Count == 0)
         {
@@ -37,7 +37,7 @@ namespace HbgKontoret.Data.Data.Repositories
           {
             Id = user.Id,
             Email = user.Email,
-            ProfileId = user.ProfileId,
+            ProfileDtoId = user.ProfileId,
             Password = user.Password,
           };
           if (user.Role!=null)
@@ -58,16 +58,13 @@ namespace HbgKontoret.Data.Data.Repositories
     {
       try
       {
-        var user = await _appDbContext.Users.Include(x => x.Role).FirstOrDefaultAsync(x => x.Id == id);
+        var user = await _appDbContext.Users.Include(x => x.Role).Include(x=>x.Profile).FirstOrDefaultAsync(x => x.Id == id);
 
         if (user != null)
         {
           var roleDto = new RoleDto { Id = user.Role.Id, Name = user.Role.Name };
-          //var profile = await _appDbContext.Profiles.Include(x => x.ProfileOffices).ThenInclude(x => x.Office).
-          //  Include(x => x.ProfileCompetences).
-          //  ThenInclude(x => x.Competence).FirstOrDefaultAsync(x => x.Id == user.ProfileId);
 
-          var userDto = new UserDto { Id = user.Id, Email = user.Email, Password = user.Password, ProfileId = user.ProfileId, RoleDto = roleDto };
+          var userDto = new UserDto { Id = user.Id, Email = user.Email, Password = user.Password, ProfileDtoId = user.ProfileId, RoleDto = roleDto };
 
           return userDto;
         }
@@ -105,7 +102,6 @@ namespace HbgKontoret.Data.Data.Repositories
 
       
     }
-
     public async Task<UserDto> UpdateUserByIdAsync(Guid id, UserDto userDto)
     {
       try

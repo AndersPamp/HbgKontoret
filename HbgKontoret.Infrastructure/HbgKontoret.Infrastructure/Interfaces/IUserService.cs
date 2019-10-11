@@ -14,5 +14,6 @@ namespace HbgKontoret.Infrastructure.Interfaces
     Task<IEnumerable<UserDto>> GetAllUsersAsync();
     Task<UserDto> GetUserByIdAsync(Guid id);
     string Authenticate(string username, string password);
+    Task<UserDto> UpdateUserByIdAsync(Guid userId, UserDto userDto);
   }
 }

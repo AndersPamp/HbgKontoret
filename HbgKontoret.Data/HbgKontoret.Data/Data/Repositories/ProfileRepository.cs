@@ -249,41 +249,6 @@ namespace HbgKontoret.Data.Data.Repositories
       return false;
     }
 
-    //public async Task<IEnumerable<CompetenceDto>> GetCompetencesAsync(Guid profileId)
-    //{
-    //  if (profileId != Guid.Empty)
-    //  {
-    //    var competences = await _appDbContext.Competences.Include(s => s.ProfileCompetences.Where(t => t.ProfileId == profileId)).ToListAsync();
 
-    //    if (competences != null)
-    //    {
-    //      var competenceDtos = _mapper.Map<IEnumerable<Competence>, IEnumerable<CompetenceDto>>(competences);
-
-    //      return competenceDtos;
-    //    }
-    //    return null;
-    //  }
-    //  return null;
-    //}
-
-    //public async Task<IEnumerable<CompetenceDto>> AddCompetenceAsync(Guid profileId, int competenceId)
-    //{
-    //  if (profileId != Guid.Empty && competenceId != 0)
-    //  {
-    //    var profileCompetence = new ProfileCompetence()
-    //    {
-    //      CompetenceId = competenceId,
-    //      ProfileId = profileId
-    //    };
-    //    await _appDbContext.ProfileCompetences.AddAsync(profileCompetence);
-
-    //    var competences = await _appDbContext.Competences.Include(s => s.ProfileCompetences.Where(t => t.ProfileId == profileId)).ToListAsync();
-    //    var competenceDtos = _mapper.Map<IEnumerable<Competence>, IEnumerable<CompetenceDto>>(competences);
-
-    //    return competenceDtos;
-    //  }
-
-    //  return null;
-    //}
   }
 }

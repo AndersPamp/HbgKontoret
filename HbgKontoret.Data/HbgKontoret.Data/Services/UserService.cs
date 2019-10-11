@@ -39,7 +39,7 @@ namespace HbgKontoret.Data.Services
       }
       catch (Exception e)
       {
-        throw new Exception(e.Message.ToString());
+        throw new Exception(e.Message);
       }
     }
 
@@ -78,34 +78,18 @@ namespace HbgKontoret.Data.Services
         Expires = DateTime.UtcNow.AddHours(12),
         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
       };
+      //var userIdClaim = tokenDescriptor.Subject.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+      //var userIdValue = userIdClaim.Value;
 
       var jwtToken = tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
       var token = tokenHandler.WriteToken(jwtToken);
+
+      
 
       userDto.Password = null;
 
       return token;
     }
-
-    //public Cookie Authenticate(string username, string password)
-    //{
-    //  var claims=new List<Claim>
-    //  {
-    //    new Claim(ClaimTypes.Name, username),
-    //    new Claim(ClaimTypes.Role, "Administrator")
-    //  };
-
-    //  var claimsIdentity=new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-    //  var authProperties = new AuthenticationProperties
-    //  {
-    //    AllowRefresh = true,
-    //    IssuedUtc = DateTimeOffset.UtcNow,
-    //    RedirectUri = "https://localhost:44398/api/user/authenticate"
-    //  };
-
-    //  return null;
-    //}
 
     public async Task<UserDto> AddUserAsync(string username, string password)
     {
@@ -144,8 +128,14 @@ namespace HbgKontoret.Data.Services
       {
         throw new Exception(e.Message);
       }
-      
+
       return false;
+    }
+
+    public async Task<UserDto> UpdateUserByIdAsync(Guid userId, UserDto userDto)
+    {
+      return await _userRepository.UpdateUserByIdAsync(userId, userDto);
+      
     }
   }
 }

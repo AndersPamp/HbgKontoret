@@ -17,10 +17,12 @@ namespace HbgKontoret.Controllers
   public class ProfileController : ControllerBase
   {
     private readonly IProfileService _profileService;
+    private readonly IUserService _userService;
 
-    public ProfileController(IProfileService profileService)
+    public ProfileController(IProfileService profileService, IUserService userService)
     {
       _profileService = profileService;
+      _userService = userService;
     }
 
     // GET: api/ProfileDto
@@ -46,36 +48,55 @@ namespace HbgKontoret.Controllers
     }
 
     // GET: api/ProfileDto/5
-    [HttpGet("{id}")]
+    [HttpGet("profile")]
     [AllowAnonymous]
-    public async Task<ActionResult<JsonResponse>> GetProfileDtoById(Guid id)
+    public async Task<ActionResult<JsonResponse>> GetProfileDtoById()
     {
-      var profileDto = await _profileService.GetProfileByIdAsync(id);
+      var userId= User.Identity.Name;
 
-      if (profileDto != null)
+      try
       {
-        return Ok(new JsonResponse
+        var user = await _userService.GetUserByIdAsync(Guid.Parse(userId));
+        var profileDto = user.ProfileDtoId.HasValue ? await _profileService.GetProfileByIdAsync(user.ProfileDtoId.Value) : null;
+
+        if (profileDto != null)
         {
-          Data = profileDto
+          return Ok(new JsonResponse
+          {
+            Data = profileDto
+          });
+        }
+
+        return NotFound(new JsonResponse
+        {
+          Error = true,
+          Message = "No profile found for this user"
         });
       }
-
-      return NotFound(new JsonResponse
+      catch (Exception e)
       {
-        Error = true,
-        Message = "All makt åt Tengil, vår befriare!"
-      });
+        return NotFound(new JsonResponse
+        {
+          Error = true,
+          Message = e.Message
+        });
+      }
     }
 
     // POST: api/ProfileDto
     [HttpPost("register")]
-    public async Task<ActionResult<JsonResponse>> AddProfileDto([FromBody] ProfileDto ProfileDto)
+    public async Task<ActionResult<JsonResponse>> AddProfileDto([FromBody] ProfileDto profileDto)
     {
+      var userId = User.Identity.Name;
+      var user = await _userService.GetUserByIdAsync(Guid.Parse(userId));
+
+
       if (ModelState.IsValid)
       {
-        var newProfileDto = await _profileService.AddProfileAsync(ProfileDto.FirstName, ProfileDto.LastName, ProfileDto.Manager, ProfileDto.ImageUrl, ProfileDto.LinkedInUrl,
-          ProfileDto.PhoneNo, ProfileDto.AboutMe);
-
+        var newProfileDto = await _profileService.AddProfileAsync(profileDto.FirstName, profileDto.LastName, profileDto.Manager, profileDto.ImageUrl, profileDto.LinkedInUrl,
+          profileDto.PhoneNo, profileDto.AboutMe);
+        user.ProfileDtoId = newProfileDto.Id;
+        await _userService.UpdateUserByIdAsync(Guid.Parse(userId), user);
         return Created("", new JsonResponse
         {
           Data = newProfileDto
@@ -90,23 +111,38 @@ namespace HbgKontoret.Controllers
     }
 
     // PUT: api/ProfileDto/5
-    [HttpPut("{id}")]
-    public async Task<ActionResult<ProfileDto>> EditProfileDto(Guid id, [FromBody] ProfileDto profileDto)
+    [HttpPut]
+    public async Task<ActionResult<ProfileDto>> EditProfileDto([FromBody] ProfileDto profileDto)
     {
-      if (ModelState.IsValid)
+      var userId = User.Identity.Name;
+
+      try
       {
-        var result = await _profileService.EditProfileAsync(id, profileDto);
-        return Created("", new JsonResponse
+        var user = await _userService.GetUserByIdAsync(Guid.Parse(userId));
+        
+
+        if (user.ProfileDtoId.HasValue)
         {
-          Data = result
+          var profile = await _profileService.GetProfileByIdAsync(user.ProfileDtoId.Value);
+          var result = await _profileService.EditProfileAsync(profile.Id, profileDto);
+          await _userService.UpdateUserByIdAsync(Guid.Parse(userId), user);
+          return Created("", new JsonResponse
+          {
+            Data = result
+          });
+        }
+
+        return Created("", await AddProfileDto(profileDto));
+      }
+      catch (Exception e)
+      {
+
+        return BadRequest(new JsonResponse
+        {
+          Error = true,
+          Message = e.Message
         });
       }
-
-      return BadRequest(new JsonResponse
-      {
-        Error = true,
-        Message = "All makt åt Tengil, vår befriare!"
-      });
     }
 
     //PATCH: api/ProfileDto/5
